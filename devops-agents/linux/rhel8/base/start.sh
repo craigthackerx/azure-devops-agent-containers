@@ -22,7 +22,7 @@ azdoLatestAgentVersion="$(curl --silent "https://api.github.com/repos/${USER}/${
 
 strippedTagAzDoAgentVersion="$(echo "${azdoLatestAgentVersion}" | sed 's/v//')" && \
 
-AZP_AGENTPACKAGE_URL="https://vstsagentpackage.azureedge.net/agent/${strippedTagAzDoAgentVersion}/vsts-agent-${OS}-${ARCH}-${strippedTagAzDoAgentVersion}.${PACKAGE} -o agent.${PACKAGE}"
+AZP_AGENTPACKAGE_URL="https://vstsagentpackage.azureedge.net/agent/${strippedTagAzDoAgentVersion}/vsts-agent-${OS}-${ARCH}-${strippedTagAzDoAgentVersion}.${PACKAGE}"
 
 if [ -z "${AZP_URL}" ]; then
   echo 1>&2 "error: missing AZP_URL environment variable"
