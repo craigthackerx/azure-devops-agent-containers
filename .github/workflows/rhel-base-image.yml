@@ -57,4 +57,4 @@ jobs:
             DateCreated=$(date +'%Y-%m-%d')
 
           push: "${{ env.GITHUB_REGISTRY }}/${{ secrets.USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAGS }}"
-          github-token: ${{ GITHUB_TOKEN }}
+          github-token: ${{ secrets.GH_TOKEN }}
