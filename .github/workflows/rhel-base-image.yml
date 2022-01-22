@@ -51,7 +51,7 @@ jobs:
             PYTHON3_VERSION="${{ env.PYTHON3_VERSION }}"
 
           context: ${{ env.CONTEXT }}
-          file: ${{ env.DOCKERFILE_NAME }}
+          file: "${{ env.CONTEXT }}/${{ env.DOCKERFILE_NAME }}"
           tags: "${{ env.GITHUB_REGISTRY }}/${{ secrets.USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAGS }}"
           labels: |
             DateCreated=$(date +'%Y-%m-%d')
