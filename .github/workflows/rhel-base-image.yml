@@ -22,7 +22,7 @@ jobs:
 
       PYTHON3_VERSION: 3.9.10
 
-      IMAGE_NAME: "azure-devops-agent-base-rhel"
+      IMAGE_NAME: "azure-devops-agent-base-rhel8"
       TAGS: "latest"
 
       GITHUB_REGISTRY: "ghcr.io"
