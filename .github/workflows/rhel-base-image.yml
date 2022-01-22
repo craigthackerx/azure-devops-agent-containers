@@ -48,7 +48,7 @@ jobs:
         with:
           build-args: |
             ACCEPT_EULA="y"
-            PYTHON3_VERSION="${{ env.PYTHON3_VERSION }}"
+            PYTHON3_VERSION=${{ env.PYTHON3_VERSION }}
 
           context: ${{ env.CONTEXT }}
           file: "${{ env.CONTEXT }}/${{ env.DOCKERFILE_NAME }}"
