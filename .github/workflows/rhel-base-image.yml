@@ -18,7 +18,7 @@ jobs:
     environment: main
     env:
       CONTEXT: "devops-agents/linux/rhel8/base"
-      DOCKERFILE_NAME: "${{ env.CONTEXT }}/Base.Dockerfile"
+      DOCKERFILE_NAME: "Base.Dockerfile"
 
       PYTHON3_VERSION: "3.9.10"
 
