@@ -20,7 +20,7 @@ jobs:
       CONTEXT: "devops-agents/linux/rhel8/base"
       DOCKERFILE_NAME: "Base.Dockerfile"
 
-      PYTHON3_VERSION: "3.9.10"
+      PYTHON3_VERSION: 3.9.10
 
       IMAGE_NAME: "azure-devops-agent-base-rhel"
       TAGS: "latest"
