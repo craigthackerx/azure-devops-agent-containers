@@ -1,4 +1,4 @@
-FROM ghcr.io/craigthackerx/azure-devops-rhel8:latest
+FROM ghcr.io/craigthackerx/azure-devops-agent-base-rhel8:latest
 
 ARG AZP_URL=https://dev.azure.com/Example
 ARG AZP_TOKEN=ExamplePatToken
@@ -16,6 +16,7 @@ ARG NORMAL_USER=azp
 
 ENV NORMAL_USER ${NORMAL_USER}
 
-RUN useradd -ms /bin/bash ${NORMAL_USER}
+RUN useradd -ms /bin/bash ${NORMAL_USER} && \
+    chown -R ${NORMAL_USER} /azp
 
 USER ${NORMAL_USER}

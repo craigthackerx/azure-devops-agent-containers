@@ -6,7 +6,7 @@ GITHUB_REPO="ghcr.io"
 USER="craigthackerx"
 IMAGE_NAME="azure-devops-agent-rhel8"
 TAGS="latest"
-DOCKERFILE_NAME="Base.Dockerfile"
+DOCKERFILE_NAME="Agent.Dockerfile"
 
 AZP_URL="https://dev.azure.com/ExampleOrg/ExampleProj"
 AZP_TOKEN="ExamplePATTOKEN"
@@ -20,7 +20,7 @@ set -xeou pipefail
 
   podman build \
     --file="${DOCKERFILE_NAME}" \
-    --tag="DOCKER_IMAGE" \
+    --tag="${DOCKER_IMAGE}" \
     --build-arg NORMAL_USER="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)"  \
     --build-arg ACCEPT_EULA="y" \
     --build-arg AZP_URL="${AZP_URL}" \
