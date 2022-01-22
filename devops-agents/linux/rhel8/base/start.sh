@@ -4,6 +4,12 @@ set -e
 
 source "${HOME}"/.bashrc
 
+print_header() {
+  lightcyan='\033[1;36m'
+  nocolor='\033[0m'
+  echo -e "${lightcyan}$1${nocolor}"
+}
+
 USER="microsoft"
 REPO="azure-pipelines-agent"
 OS="linux"
@@ -59,12 +65,6 @@ cleanup() {
       --auth PAT \
       --token "$(cat "${AZP_TOKEN_FILE}")"
   fi
-}
-
-print_header() {
-  lightcyan='\033[1;36m'
-  nocolor='\033[0m'
-  echo -e "${lightcyan}$1${nocolor}"
 }
 
 # Let the agent ignore the token env variables
