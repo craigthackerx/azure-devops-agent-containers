@@ -11,7 +11,7 @@ ARCH="x64"
 PACKAGE="tar.gz"
 
 if [ "$(command -v jq)" ] && [ "$(command -v curl)" ] && [ "$(command -v sed)" ]; then
-  echo "You have the needed package to run the script"
+  print_header "0. Checking jq, curl and sed are installed..."
 
   else
     echo "You do not have the needed packages to run the script, please install them" && exit 1
