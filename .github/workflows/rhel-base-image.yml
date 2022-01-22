@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  terraform:
+  docker:
     name: 'Container Base Build'
     runs-on: ubuntu-latest
     environment: main
