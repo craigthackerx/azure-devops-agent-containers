@@ -28,28 +28,35 @@ This repo has 2 main concepts:
 
 - The base image, which forms the overall base of all of your agents - this is a shared layer where updates and dependencies across all of your projects should sit - These agents may end up being used by more than one team, so try to keep the base as static as possible. So for my example, I am installing Python, for you it may be Java, or Go, or .NET or even more, but just remember, the Python is for what I am doing. In my example files, I am installing:
 
-        - On Linux:
-           - Various packages and updates needed.
-           - Python - Latest version with argument at pipeline level for roll-back options - This is for Azure-CLI which I wish to be part of ALL of my agents
-           - Azure-CLI - Installed via global pip3
-           - PowerShell 7 - With all Azure modules downloaded (these are around 2GB in size, which is why its part of the base)
-           - The script which will execute on `CMD` in the container, which will fetch the latest Azure Pipelines agent on execution
-             - **NOTE: The script is not intended to be ran by the base, but the agent, as it requires various build arguments to execute and connect to Azure DevOps** 
+</br>
 
-        - On Windows:
-          - Chocolatey and Scoop installed
-          - Python - Latest version from chocolatey
-          - Azure-CLI - Latest version from chocolatey
-          - Git - Latest from chocolatey (and will also install Bash)
-          - 7-Zip
-          - Scoop "extras" bucket
-            - **NOTE: The script is not intended to be ran by the base, but the agent, as it requires various build arguments to execute and connect to Azure DevOps**
-  
-- The agent image, this is where your agent itself is going to have its packages etc implemented.  It may be you want one image for building your React code, and another for your DevOps toolbox, installing things like Terraform, Packer, Ansible etc, but as intended, you will want these to be part of the same base - this is to make distribution and packages.  So essentially, your goal with this image is to purpose build an amount of agents and pass in your instance information.  So to summarize:
-      
-        - This image is intended to be bespoke per project, sometimes you will need many of these to make up a cluster of agents.
-        - You are expected to pass your Azure DevOps information at this layer - **Be very wary** of how you store these - Environment files are supported, but be aware, if you host this publicly, someone could potentially connect to your Azure DevOps instance if you aren't careful about how you store your secrets etc
-        - Your secrets are passed into the container as either environment variables `ENV` with optional `ARG` commands to make use of a secret manager like Azure Keyvault Secrets or GitHub secrets, you will need to pass your DevOps URL, a PAT token with various permissions (detailed below).
-        - You should install your bespoke packages on this layer
-        - You should consider container security, for example, running the container as a non-root user and having least privileged where possible, this example uses a `NORMAL_USER` for its `CMD` context when the container starts, so this user must be made and have the `USER` directive set, as well as `PATH` updated.  Always check the upstream base image for vulnerabilities before building agents on top.
-        - Users are generated using some form of random entropy with a input argument, to ensure conflict would be close to impossible - if you want to hard-code your agent name, you can do this with an `--build-arg`
+  - On Linux:
+     - Various packages and updates needed.
+     - Python - Latest version with argument at pipeline level for roll-back options - This is for Azure-CLI which I wish to be part of ALL of my agents
+     - Azure-CLI - Installed via global pip3
+     - PowerShell 7 - With all Azure modules downloaded (these are around 2GB in size, which is why its part of the base)
+     - The script which will execute on `CMD` in the container, which will fetch the latest Azure Pipelines agent on execution
+       - **NOTE: The script is not intended to be ran by the base, but the agent, as it requires various build arguments to execute and connect to Azure DevOps** 
+
+  - On Windows:
+    - Chocolatey and Scoop installed
+    - Python - Latest version from chocolatey
+    - Azure-CLI - Latest version from chocolatey
+    - Git - Latest from chocolatey (and will also install Bash)
+    - 7-Zip
+    - Scoop "extras" bucket
+      - **NOTE: The script is not intended to be ran by the base, but the agent, as it requires various build arguments to execute and connect to Azure DevOps**
+
+</br>
+
+  - The agent image, this is where your agent itself is going to have its packages etc implemented.  It may be you want one image for building your React code, and another for your DevOps toolbox, installing things like Terraform, Packer, Ansible etc, but as intended, you will want these to be part of the same base - this is to make distribution and packages.  So essentially, your goal with this image is to purpose build an amount of agents and pass in your instance information.  So to summarize:
+
+</br>
+
+  - This image is intended to be bespoke per project, sometimes you will need many of these to make up a cluster of agents.
+  - You are expected to pass your Azure DevOps information at this layer - **Be very wary** of how you store these - Environment files are supported, but be aware, if you host this publicly, someone could potentially connect to your Azure DevOps instance if you aren't careful about how you store your secrets etc
+  - Your secrets are passed into the container as either environment variables `ENV` with optional `ARG` commands to make use of a secret manager like Azure Keyvault Secrets or GitHub secrets, you will need to pass your DevOps URL, a PAT token with various permissions (detailed below).
+  - You should install your bespoke packages on this layer
+  - You should consider container security, for example, running the container as a non-root user and having least privileged where possible, this example uses a `NORMAL_USER` for its `CMD` context when the container starts, so this user must be made and have the `USER` directive set, as well as `PATH` updated.  Always check the upstream base image for vulnerabilities before building agents on top.
+  - Users are generated using some form of random entropy with a input argument, to ensure conflict would be close to impossible - if you want to hard-code your agent name, you can do this with an `--build-arg`
+  - Consider your labels, these examples use [podman](https://docs.podman.io) and use [podman-auto-update](https://docs.podman.io/en/latest/markdown/podman-auto-update.1.html) to help with CI/CD.  Similar functionality can be done with [containrrr/watchtower](https://github.com/containrrr/watchtower)

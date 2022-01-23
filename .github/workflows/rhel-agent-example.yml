@@ -14,10 +14,9 @@ jobs:
       CONTEXT: "devops-agents/linux/rhel8/agent"
       DOCKERFILE_NAME: "Agent.Dockerfile"
 
-      IMAGE_NAME: "azure-devops-agent-agent-rhel8"
+      REGISTRY: "ghcr.io"
+      IMAGE_NAME: "azure-devops-agent-rhel8"
       TAGS: "latest"
-
-      GITHUB_REGISTRY: "ghcr.io"
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -27,31 +26,28 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Docker Login
-        uses: docker/login-action@v1.12.0
-        with:
-          registry: ${{ env.GITHUB_REGISTRY }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          logout: true
+      - name: Login, Build and push Container images
+        working-directory: ${{ env.CONTEXT }}
+        run: |
+          
+          podman login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }} ${{ env.REGISTRY }} && \
+        
+          podman build \
+            --file="${{ env.DOCKERFILE_NAME }}" \
+            --tag="${{ env.REGISTRY }}/${{secrets.USERNAME }}/${{ env.IMAGE_NAME}}:${{ env.TAGS }}" \
+            --build-arg NORMAL_USER="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10) \
+            --build-arg AZP_AGENT_NAME="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)"
+            --build-arg AZP_URL="${{ secrets.AZP_URL }}" \
+            --build-arg AZP_TOKEN="${{ secrets.AZP_TOKEN }}"
+            --build-arg AZP_POOL="${{ secrets.AZP_POOL }}" \
+            --build-arg AZP_WORK="${{ secrets.AZP_WORK }}"
+            --label=DateCreated="$(date +'%Y-%m-%d')" \
+            --label "io.containers.autoupdate=registry" \
+            --label "io.containers.autoupdate.authfile=${XDG_RUNTIME_DIR}/containers/auth.json
+            --squash && \
 
-      - name: Build and push Docker images
-        uses: docker/build-push-action@v2.8.0
-        with:
-          build-args: |
-            ACCEPT_EULA="y"
-            NORMAL_USER="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)"
-            AZP_AGENT_NAME="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)"
-            AZP_URL=${{ secrets.AZP_URL }}
-            AZP_TOKEN=${{ secrets.AZP_TOKEN }}
-            AZP_POOL=${{ secrets.AZP_POOL }}
-            AZP_WORK=${{ secrets.AZP_WORK }}
-
-          context: ${{ env.CONTEXT }}
-          file: "${{ env.CONTEXT }}/${{ env.DOCKERFILE_NAME }}"
-          tags: "${{ env.GITHUB_REGISTRY }}/${{ secrets.USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAGS }}"
-          labels: |
-            DateCreated=$(date +'%Y-%m-%d')
-
-          push: true
-          github-token: ${{ secrets.GH_TOKEN }}
+          podman push "${{ env.REGISTRY }}/${{secrets.USERNAME }}/${{ env.IMAGE_NAME}}:${{ env.TAGS }}" && \
+        
+          podman logout --all && \
+        
+          rm -rf ${XDG_RUNTIME_DIR}/containers/auth.json

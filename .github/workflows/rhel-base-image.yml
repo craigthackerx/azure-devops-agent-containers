@@ -50,6 +50,6 @@ jobs:
 
           podman push "${{ env.REGISTRY }}/${{secrets.USERNAME }}/${{ env.IMAGE_NAME}}:${{ env.TAGS }}" && \
         
-          podman logout && \
+          podman logout --all && \
         
           rm -rf ${XDG_RUNTIME_DIR}/containers/auth.json
