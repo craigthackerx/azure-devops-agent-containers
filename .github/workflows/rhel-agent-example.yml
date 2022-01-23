@@ -45,7 +45,7 @@ jobs:
           podman build \
               --file="${{ env.DOCKERFILE_NAME }}" \
               --tag="${{ env.REGISTRY }}/${{secrets.USERNAME }}/${{ env.IMAGE_NAME}}${INDEX}:${{ env.TAGS }}" \
-              --build-arg NORMAL_USER="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10) \
+              --build-arg NORMAL_USER="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)" \
               --build-arg AZP_AGENT_NAME="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)" \
               --build-arg AZP_URL="${{ secrets.AZP_URL }}" \
               --build-arg AZP_TOKEN="${{ secrets.AZP_TOKEN }}"
