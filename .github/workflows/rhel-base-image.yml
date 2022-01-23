@@ -34,15 +34,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Docker Login
-        uses: docker/login-action@v1.12.0
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          logout: true
-
-      - name: Login, Build and push Docker images
+      - name: Login, Build and push Container images
+        working-directory: ${{ env.CONTEXT }}
         run: |
           
           podman login -u ${{ env.USERNAME }} -p ${{ secrets.PASSWORD }} ${{ env.REGISTRY }} && \
@@ -52,7 +45,7 @@ jobs:
             --tag="${{ env.REGISTRY }}/${{secrets.USERNAME }}/${{ env.IMAGE_NAME}}:${{ env.TAGS }}" \
             --build-arg ACCEPT_EULA="y" \
             --build-arg PYTHON3_VERSION=${{ env.PYTHON3_VERSION }} \
-            --label=DateCreated=$(date +'%Y-%m-%d')
+            --label=DateCreated=$(date +'%Y-%m-%d') \
             --squash && \
 
           podman push "${{ env.REGISTRY }}/${{secrets.USERNAME }}/${{ env.IMAGE_NAME}}:${{ env.TAGS }}" && \
