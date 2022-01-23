@@ -38,7 +38,7 @@ jobs:
         working-directory: ${{ env.CONTEXT }}
         run: |
           
-          podman login -u ${{ env.USERNAME }} -p ${{ secrets.PASSWORD }} ${{ env.REGISTRY }} && \
+          podman login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }} ${{ env.REGISTRY }} && \
         
           podman build \
             --file="${{ env.CONTEXT }}/${{ env.DOCKERFILE_NAME }}" \
