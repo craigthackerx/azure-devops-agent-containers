@@ -1,4 +1,4 @@
-name: 'Base RHEL Build'
+name: 'Base Windows 20H2 Build'
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
       CONTEXT: "devops-agents/windows/20H2/base"
       DOCKERFILE_NAME: "Base.Dockerfile"
 
-      PYTHON3_VERSION: @latest
+      PYTHON3_VERSION: "@latest"
       NORMAl_USER: ContainerAdministrator
 
       REGISTRY: "ghcr.io"
