@@ -41,7 +41,7 @@ jobs:
           podman login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }} ${{ env.REGISTRY }} && \
         
           podman build \
-            --file="${{ env.CONTEXT }}/${{ env.DOCKERFILE_NAME }}" \
+            --file="${{ env.DOCKERFILE_NAME }}" \
             --tag="${{ env.REGISTRY }}/${{secrets.USERNAME }}/${{ env.IMAGE_NAME}}:${{ env.TAGS }}" \
             --build-arg ACCEPT_EULA="y" \
             --build-arg PYTHON3_VERSION=${{ env.PYTHON3_VERSION }} \
