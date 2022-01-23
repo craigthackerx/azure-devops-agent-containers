@@ -1,4 +1,4 @@
-name: 'Base Windows 20H2 Build'
+name: 'Base Windows Server Build'
 
 on:
   push:
@@ -17,14 +17,14 @@ jobs:
     runs-on: windows-latest
     environment: main
     env:
-      CONTEXT: "devops-agents/windows/20H2/base"
+      CONTEXT: "devops-agents/windows/server/base"
       DOCKERFILE_NAME: "Base.Dockerfile"
 
       PYTHON3_VERSION: "@latest"
       NORMAl_USER: ContainerAdministrator
 
       REGISTRY: "ghcr.io"
-      IMAGE_NAME: "azure-devops-agent-base-win20h2:"
+      IMAGE_NAME: "azure-devops-agent-base-winserver:"
       TAGS: "latest"
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
