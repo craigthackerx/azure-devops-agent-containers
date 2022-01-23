@@ -1,13 +1,18 @@
+#Use supplier image
 FROM registry.access.redhat.com/ubi8/ubi:latest
 
+#Set args with blank values - these will be over-written with the CLI
 ARG ACCEPT_EULA=y
 ARG PYTHON3_VERSION=3.9.10
 
+#Set the environment with the CLI-passed arguements
 ENV ACCEPT_EULA ${ACCEPT_EULA}
 ENV PYTHON3_VERSION ${PYTHON3_VERSION}
 
+#Declare user expectation, I am performing root actions, so use root.
 USER root
 
+#Install needed packages as well as setup python with args and pip
 RUN mkdir -p /azp && \
     yum update -y && yum upgrade -y && yum install -y yum-utils dnf sudo && sudo yum install -y \
     bash \
@@ -39,11 +44,12 @@ RUN mkdir -p /azp && \
 curl https://packages.microsoft.com/config/rhel/7/prod.repo | sudo tee /etc/yum.repos.d/microsoft.repo && \
 yum install -y powershell
 
+#Prepare container for Azure DevOps script execution
 WORKDIR /azp
 COPY start.sh /azp/start.sh
 CMD [ "./start.sh" ]
 
-#Install Azure Modules for Powershell - This can take a while
+#Install Azure Modules for Powershell - This can take a while, so setting as final step to shorten potential rebuilds
 RUN pwsh -Command Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted ; pwsh -Command Install-Module -Name Az -Force -AllowClobber -Scope AllUsers -Repository PSGallery && \
     yum clean all && microdnf clean all && [ ! -d /var/cache/yum ] || rm -rf /var/cache/yum
 
