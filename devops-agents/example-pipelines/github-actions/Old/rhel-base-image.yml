@@ -22,9 +22,10 @@ jobs:
 
       PYTHON3_VERSION: 3.9.10
 
-      REGISTRY: "ghcr.io"
       IMAGE_NAME: "azure-devops-agent-base-rhel8"
       TAGS: "latest"
+
+      GITHUB_REGISTRY: "ghcr.io"
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -43,14 +44,17 @@ jobs:
           logout: true
 
       - name: Build and push Docker images
-        run:
+        uses: docker/build-push-action@v2.8.0
+        with:
+          build-args: |
+            ACCEPT_EULA="y"
+            PYTHON3_VERSION=${{ env.PYTHON3_VERSION }}
 
-            podman build \
-              --file="${{ env.CONTEXT }}/${{ env.DOCKERFILE_NAME }}" \
-              --tag="${{ env.REGISTRY }}/${{secrets.USERNAME }}/${{ env.IMAGE_NAME}}:${{ env.TAGS }}" \
-              --build-arg ACCEPT_EULA="y" \
-              --build-arg PYTHON3_VERSION=${{ env.PYTHON3_VERSION }} \
-              --label=DateCreated=$(date +'%Y-%m-%d')
-              --squash && \
-        
-          podman push "${{ env.REGISTRY }}/${{secrets.USERNAME }}/${{ env.IMAGE_NAME}}:${{ env.TAGS }}"
+          context: ${{ env.CONTEXT }}
+          file: "${{ env.CONTEXT }}/${{ env.DOCKERFILE_NAME }}"
+          tags: "${{ env.GITHUB_REGISTRY }}/${{ secrets.USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAGS }}"
+          labels: |
+            DateCreated=$(date +'%Y-%m-%d')
+
+          push: true
+          github-token: ${{ secrets.GH_TOKEN }}
