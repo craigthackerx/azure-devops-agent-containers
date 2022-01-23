@@ -16,7 +16,7 @@ My containers probably don't follow best practice as I am not really employing a
 
 - CI/CD with GitHub Actions :rocket: - (Azure DevOps CI/CD coming soon)
 - Container registry using GitHub Packages with Github Container Registry :sunglasses:
-- Example scripts in Podman, CI/CD pipelines in Docker (buldah examples intended for future) :whale:
+- Example scripts in Podman, CI/CD pipelines in Podman for Linux and Docker for Windows :whale:
 - Linux Images used in the repo:
    - [RedHat 8 Universal Basic Image](https://catalog.redhat.com/software/container-stacks/detail/5ec53f50ef29fd35586d9a56)
  - Windows Image used in the repo:

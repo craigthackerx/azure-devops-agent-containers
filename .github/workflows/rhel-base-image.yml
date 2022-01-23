@@ -42,14 +42,21 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           logout: true
 
-      - name: Build and push Docker images
+      - name: Login, Build and push Docker images
         run: |
-            podman build \
-              --file="${{ env.CONTEXT }}/${{ env.DOCKERFILE_NAME }}" \
-              --tag="${{ env.REGISTRY }}/${{secrets.USERNAME }}/${{ env.IMAGE_NAME}}:${{ env.TAGS }}" \
-              --build-arg ACCEPT_EULA="y" \
-              --build-arg PYTHON3_VERSION=${{ env.PYTHON3_VERSION }} \
-              --label=DateCreated=$(date +'%Y-%m-%d')
-              --squash && \
+          
+          podman login -u ${{ env.USERNAME }} -p ${{ secrets.PASSWORD }} ${{ env.REGISTRY }} && \
+        
+          podman build \
+            --file="${{ env.CONTEXT }}/${{ env.DOCKERFILE_NAME }}" \
+            --tag="${{ env.REGISTRY }}/${{secrets.USERNAME }}/${{ env.IMAGE_NAME}}:${{ env.TAGS }}" \
+            --build-arg ACCEPT_EULA="y" \
+            --build-arg PYTHON3_VERSION=${{ env.PYTHON3_VERSION }} \
+            --label=DateCreated=$(date +'%Y-%m-%d')
+            --squash && \
 
           podman push "${{ env.REGISTRY }}/${{secrets.USERNAME }}/${{ env.IMAGE_NAME}}:${{ env.TAGS }}"
+        
+          podman logout && \
+        
+          rm -rf ${XDG_RUNTIME_DIR}/containers/auth.json
