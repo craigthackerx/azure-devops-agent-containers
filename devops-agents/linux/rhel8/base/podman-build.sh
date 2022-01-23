@@ -20,7 +20,3 @@ set -xe
     --build-arg ACCEPT_EULA="y" \
     --build-arg PYTHON3_VERSION="${PYTHON3_VERSION}" \
     --squash
-
-
-
-

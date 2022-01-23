@@ -1,0 +1,50 @@
+name: 'Agent Example Windows Build'
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  build:
+
+    name: 'Container Agent Build'
+    runs-on: windows-latest
+    environment: main
+    env:
+
+      #Set this variable to determine how many agents you want
+      AGENT_AMOUNT: "3"
+
+      CONTEXT: "devops-agents/windows/20H2/agent"
+      DOCKERFILE_NAME: "Base.Dockerfile"
+
+      PYTHON3_VERSION: 3.9.10
+
+      REGISTRY: "ghcr.io"
+      IMAGE_NAME: "azure-devops-agent-win20H2-agent-:"
+      TAGS: "latest"
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: pwsh
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login, Build and push Container images
+        working-directory: ${{ env.CONTEXT }}
+        run: |
+          
+          docker login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }} ${{ env.REGISTRY }} ; `
+
+            docker build `
+            --file=$DOCKERFILE_NAME `
+            --tag=$REPO/$USER/$IMAGE_NAME$TAGS `
+            --build-arg ACCEPT_EULA="y" `
+            --build-arg NORMAL=USER=$NORMAL_USER `
+            --build-arg PYTHON3_VERSION=$PYTHON3_VERSION `
+            .
+
+          docker push "${{ env.REGISTRY }}/${{secrets.USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAGS }}" ; `
+
+          docker logout ${{ env.REGISTRY }}
