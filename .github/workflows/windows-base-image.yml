@@ -41,13 +41,7 @@ jobs:
           
           docker login -u ${{ secrets.USERNAME }} -p ${{ secrets.PASSWORD }} ${{ env.REGISTRY }} ; `
         
-          docker build `
-          --file=${{ env.DOCKERFILE_NAME }} `
-          --tag=$ {{ env.REGISTRY }}/${{ secrets.USER }}/${{ env.IMAGE_NAME }}$ {{ env.TAGS }} `
-          --build-arg ACCEPT_EULA=y `
-          --build-arg NORMAL_USER=${{ env.NORMAL_USER }} `
-          --build-arg PYTHON3_VERSION=${{ env.PYTHON3_VERSION }} `
-          . ; `
+          docker build --file=${{ env.DOCKERFILE_NAME }} --tag=$ {{ env.REGISTRY }}/${{ secrets.USER }}/${{ env.IMAGE_NAME }}$ {{ env.TAGS }} --build-arg ACCEPT_EULA=y --build-arg NORMAL_USER=${{ env.NORMAL_USER }} --build-arg PYTHON3_VERSION=${{ env.PYTHON3_VERSION }} . ; `
 
           docker push "${{ env.REGISTRY }}/${{secrets.USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAGS }}" ; `
         
