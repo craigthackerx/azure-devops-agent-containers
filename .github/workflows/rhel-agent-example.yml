@@ -46,14 +46,14 @@ jobs:
               --file="${{ env.DOCKERFILE_NAME }}" \
               --tag="${{ env.REGISTRY }}/${{secrets.USERNAME }}/${{ env.IMAGE_NAME}}${INDEX}:${{ env.TAGS }}" \
               --build-arg NORMAL_USER="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10) \
-              --build-arg AZP_AGENT_NAME="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)"
+              --build-arg AZP_AGENT_NAME="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)" \
               --build-arg AZP_URL="${{ secrets.AZP_URL }}" \
               --build-arg AZP_TOKEN="${{ secrets.AZP_TOKEN }}"
               --build-arg AZP_POOL="${{ secrets.AZP_POOL }}" \
-              --build-arg AZP_WORK="${{ secrets.AZP_WORK }}"
+              --build-arg AZP_WORK="${{ secrets.AZP_WORK }}" \
               --label=DateCreated="$(date +'%Y-%m-%d')" \
               --label "io.containers.autoupdate=registry" \
-              --label "io.containers.autoupdate.authfile=${XDG_RUNTIME_DIR}/containers/auth.json
+              --label "io.containers.autoupdate.authfile=${XDG_RUNTIME_DIR}/containers/auth.json \
               --squash && \
   
             podman push "${{ env.REGISTRY }}/${{secrets.USERNAME }}/${{ env.IMAGE_NAME}}${INDEX}:${{ env.TAGS }}"
