@@ -24,7 +24,7 @@ jobs:
       NORMAl_USER: ContainerAdministrator
 
       REGISTRY: "ghcr.io"
-      IMAGE_NAME: "azure-devops-agent-base-win20H2:"
+      IMAGE_NAME: "azure-devops-agent-base-win20h2:"
       TAGS: "latest"
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
