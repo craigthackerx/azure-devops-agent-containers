@@ -55,7 +55,7 @@ jobs:
             --label=DateCreated=$(date +'%Y-%m-%d')
             --squash && \
 
-          podman push "${{ env.REGISTRY }}/${{secrets.USERNAME }}/${{ env.IMAGE_NAME}}:${{ env.TAGS }}"
+          podman push "${{ env.REGISTRY }}/${{secrets.USERNAME }}/${{ env.IMAGE_NAME}}:${{ env.TAGS }}" && \
         
           podman logout && \
         
