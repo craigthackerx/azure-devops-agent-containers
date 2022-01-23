@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 
-DOCKER_REPO="docker.io"
 GITHUB_REPO="ghcr.io"
 
 USER="craigthackerx"
-IMAGE_NAME="azure-devops-agent-rhel8"
+IMAGE_NAME="azure-devops-agent-rhel8-agent-"
 TAGS="latest"
 DOCKERFILE_NAME="Agent.Dockerfile"
 
@@ -13,14 +12,16 @@ AZP_TOKEN="ExamplePATTOKEN"
 AZP_POOL="ExamplePOOL"
 AZP_WORK="_work"
 
-DOCKER_IMAGE="${DOCKER_REPO}/${USER}/${IMAGE_NAME}:${TAGS}"
-GITHUB_IMAGE="${GITHUB_REPO}/${USER}/${IMAGE_NAME}:${TAGS}"
 
-set -xeou pipefail
+START="1"
+END="3"
+
+for INDEX in $(seq ${START} ${END})
+do
 
   podman build \
     --file="${DOCKERFILE_NAME}" \
-    --tag="${DOCKER_IMAGE}" \
+    --tag="${GITHUB_REPO}/${USER}/${IMAGE_NAME}${INDEX}:${TAGS}" \
     --build-arg NORMAL_USER="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)"  \
     --build-arg ACCEPT_EULA="y" \
     --build-arg AZP_URL="${AZP_URL}" \
@@ -28,6 +29,4 @@ set -xeou pipefail
     --build-arg AZP_AGENT_NAME="$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)" \
     --build-arg AZP_POOL="${AZP_POOL}" \
     --build-arg AZP_WORK="${AZP_WORK}"
-
-  podman tag "${DOCKER_IMAGE}" \
-  "${GITHUB_IMAGE}"
+done

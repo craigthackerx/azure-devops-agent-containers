@@ -19,10 +19,7 @@ set -xe
     --tag="${DOCKER_IMAGE}" \
     --build-arg ACCEPT_EULA="y" \
     --build-arg PYTHON3_VERSION="${PYTHON3_VERSION}" \
-    --squash && \
-
-  podman tag "${DOCKER_IMAGE}" \
-  "${GITHUB_IMAGE}"
+    --squash
 
 
 
