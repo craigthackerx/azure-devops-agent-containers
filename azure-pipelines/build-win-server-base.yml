@@ -13,5 +13,5 @@ jobs:
       DOCKERFILE_NAME: "Base.Dockerfile"
       REGISTRY: "ghcr.io"
       PYTHON3_VERSION: "@latest"
-      IMAGE_NAME: "azure-devops-agent-win20h2-agent-"
+      IMAGE_NAME: "azure-devops-agent-base-winseverltsc2022"
       TAGS: ":latest"
