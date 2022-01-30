@@ -16,7 +16,7 @@ jobs:
       CONTEXT: "devops-agents/windows/server/agent"
       DOCKERFILE_NAME: "Agent.Dockerfile"
       REGISTRY: "ghcr.io"
-      IMAGE_NAME: "azure-devops-agent-server:ltsc2022-agent-"
+      IMAGE_NAME: "azure-devops-agent-winseverltsc2022-agent-"
       TAGS: ":latest"
       AZP_URL: $(AZP_URL)
       AZP_TOKEN: $(AZP_TOKEN)

@@ -24,8 +24,6 @@ New-Item "\azp\agent" -ItemType directory | Out-Null
 # Let the agent ignore the token env variables
 $Env:VSO_AGENT_IGNORE = "AZP_TOKEN,AZP_TOKEN_FILE"
 
-
-
 Set-Location agent
 
 Write-Host "1. Determining matching Azure Pipelines agent..." -ForegroundColor Cyan
