@@ -122,7 +122,7 @@ jobs:
       USERNAME: ${{ parameters.USERNAME }}
       PASSWORD: ${{ parameters.PASSWORD }}
       CONTEXT: ${{ parameters.CONTEXT }}
-      DOCKERFILE_NAME: ${{ parameters.DOCKERFILE_NAME }]
+      DOCKERFILE_NAME: ${{ parameters.DOCKERFILE_NAME }}
       REGISTRY: ${{ parameters.REGISTRY }}
       IMAGE_NAME: ${{ parameters.IMAGE_NAME }}
       TAGS: ${{ parameters.TAGS }}
