@@ -5,7 +5,7 @@ variables:
   - group: "DOCKER_SECRETS"
 
 jobs:
-  - template: ./templates/windows/build-agent.yml
+  - template: ./templates/windows/build-base.yml
     parameters:
       USERNAME: $(USERNAME)
       PASSWORD: $(PASSWORD)
