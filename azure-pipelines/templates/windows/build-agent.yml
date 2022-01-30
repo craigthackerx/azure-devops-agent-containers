@@ -111,19 +111,19 @@ jobs:
 
           foreach ($INDEX in ${{ parameters.COUNT }}..${{ parameters.AGENT_AMOUNT }}) {
           
-          docker build `
-          --file=${{ parameters.DOCKERFILE_NAME }} `
-          --tag="${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}$($INDEX)${{ parameters.TAGS }}" `
-          --build-arg ACCEPT_EULA=y `
-          --build-arg NORMAL_USER=${{ parameters.NORMAL_USER }} `
-          --build-arg AZP_URL=${{ parameters.AZP_URL }} `
-          --build-arg AZP_TOKEN=${{ parameters.AZP_TOKEN }} `
-          --build-arg AZP_AGENT_NAME=${{ parameters.AZP_AGENT_NAME }} `
-          --build-arg AZP_POOL=${{ parameters.AZP_POOL }} `
-          --build-arg AZP_WORK=${{ parameters.AZP_WORK }} `
-          . ; `
-
-          docker push "${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}_$${{ parameters.TAGS }}" ; `
+            docker build `
+            --file=${{ parameters.DOCKERFILE_NAME }} `
+            --tag="${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}$($INDEX)${{ parameters.TAGS }}" `
+            --build-arg ACCEPT_EULA=y `
+            --build-arg NORMAL_USER=${{ parameters.NORMAL_USER }} `
+            --build-arg AZP_URL=${{ parameters.AZP_URL }} `
+            --build-arg AZP_TOKEN=${{ parameters.AZP_TOKEN }} `
+            --build-arg AZP_AGENT_NAME=${{ parameters.AZP_AGENT_NAME }} `
+            --build-arg AZP_POOL=${{ parameters.AZP_POOL }} `
+            --build-arg AZP_WORK=${{ parameters.AZP_WORK }} `
+            . ; `
+  
+            docker push "${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}$($INDEX)${{ parameters.TAGS }}"
           
           }
           
