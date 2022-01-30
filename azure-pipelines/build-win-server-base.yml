@@ -1,0 +1,25 @@
+---
+name: $(BuildDefinitionName)_$(SourceBranchName)_$(date:yyyyMMdd)$(rev:.r)
+
+variables:
+  - group: "DOCKER_SECRETS"
+
+  - name: OS
+    value: "windows"
+
+jobs:
+  - job: Image Build
+    pool:
+      vmImage: windows-2022
+    steps:
+
+    - template: /templates/$(OS)/build-agent.yml
+      parameters:
+        USERNAME: $(USERNAME)
+        PASSWORD: $(PASSWORD)
+        CONTEXT: "../devops-agents/windows/server/agent"
+        DOCKERFILE_NAME: "Base.Dockerfile"
+        REGISTRY: "ghcr.io"
+        PYTHON3_VERSION: "@latest"
+        IMAGE_NAME: "azure-devops-agent-win20h2-agent-"
+        TAGS: ":latest"

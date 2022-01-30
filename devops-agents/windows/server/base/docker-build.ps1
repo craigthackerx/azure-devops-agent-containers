@@ -2,11 +2,10 @@
 
 Set-PSDebug -Trace 1
 
-
 $REGISTRY = "ghcr.io"
 $USER = "craigthackerx"
-$IMAGE_NAME = "azure-devops-agent-base-win20h2:"
-$TAGS = "latest"
+$IMAGE_NAME = "azure-devops-agent-base-winseverltsc2022"
+$TAGS = ":latest"
 $DOCKERFILE_NAME = "Base.Dockerfile"
 
 $NORMAL_USER = "ContainerAdministrator"

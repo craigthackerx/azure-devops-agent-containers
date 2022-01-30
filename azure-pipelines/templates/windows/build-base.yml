@@ -1,0 +1,95 @@
+---
+name: $(BuildDefinitionName)_$(SourceBranchName)_$(date:yyyyMMdd)$(rev:.r)
+
+parameters:
+
+  - name: USERNAME
+    displayName: "Username to be passed for registry login"
+    type: string
+
+  - name: PASSWORD
+    displayName: "Password or access token for registry login, remember to store this in a keyvault or encrypted variable"
+    type: string
+
+  - name: CONTEXT
+    displayName: "The the path to your dockerfile"
+    type: string
+
+  - name: DOCKERFILE_NAME
+    displayName: "The name of the Dockerfile"
+    default: "Dockerfile"
+    type: string
+    values:
+      - "Dockerfile"
+      - "Containerfile"
+      - "Base.Dockerfile"
+      - "Agent.Dockerfile"
+
+  - name: NORMAL_USER
+    displayName: "The name for the container user"
+    default: "ContainerAdministrator"
+    type: string
+
+  - name: PYTHON3_VERSION
+    displayName: "The version of python to be installed by get.scoop.sh"
+    type: string
+    default: "@latest"
+
+  - name: REGISTRY
+    displayName: "The target registry"
+    default: "ghcr.io"
+    type: string
+    values:
+      - "ghcr.io"
+      - "docker.io"
+      - "quay.io"
+      - "registry.redhat.com"
+      - "azurecr.io"
+
+  - name: IMAGE_NAME
+    displayName: "The name of the image"
+    type: string
+
+  - name: TAGS
+    displayName: "The tag of the image"
+    type: string
+    default: ":latest"
+
+################## DO NOT EDIT ANYTHING PAST HERE UNLESS YOU KNOW WHAT YOU ARE DOING ##################
+
+stages:
+  #Begin Building step
+  - stage: build
+    displayName: Image Build
+    pool:
+      vmImage: windows-2022
+
+    jobs:
+      - job: build_container
+        workspace:
+          clean: all
+        displayName: Image-Build-${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}
+        timeoutInMinutes: 120
+
+        steps:
+
+          - powershell: |
+            workingDirectory: ${{ parameters.CONTEXT }}
+              
+              docker login -u ${{ parameters.USERNAME }} -p ${{ parameters.PASSWORD }} ${{ parameters.REGISTRY }} ; `
+
+              docker build `
+              --file=${{ parameters.DOCKERFILE_NAME }} `
+              --tag=${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }} `
+              --build-arg ACCEPT_EULA=y `
+              --build-arg NORMAL_USER=${{ parameters.NORMAL_USER }} `
+              --build-arg PYTHON3_VERSION=${{ parameters.PYTHON3_VERSION }} `
+              . ; `
+    
+              docker push "${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}" ; `
+
+              docker logout ${{ parameters.REGISTRY }}
+
+          #Cleanup agent directory
+          - task: mspremier.PostBuildCleanup.PostBuildCleanup-task.PostBuildCleanup@3
+            displayName: "Clean Agent Directories"

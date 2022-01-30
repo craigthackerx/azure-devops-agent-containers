@@ -1,0 +1,25 @@
+---
+name: $(BuildDefinitionName)_$(SourceBranchName)_$(date:yyyyMMdd)$(rev:.r)
+
+variables:
+  - group: "DOCKER_SECRETS"
+
+  - name: OS
+    value: "linux"
+
+jobs:
+  - job: Image Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+
+    - template: /templates/$(OS)/build-base.yml
+      parameters:
+        USERNAME: $(USERNAME)
+        PASSWORD: $(PASSWORD)
+        CONTEXT: "../devops-agents/windows/server/agent"
+        DOCKERFILE_NAME: "Base.Dockerfile"
+        REGISTRY: "ghcr.io"
+        PYTHON3_VERSION: "3.10.1"
+        IMAGE_NAME: "azure-devops-agent-base-rhel8"
+        TAGS: ":latest"
