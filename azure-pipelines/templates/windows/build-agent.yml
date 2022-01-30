@@ -107,7 +107,7 @@ jobs:
 
       - powershell: |
           
-          Write-Output ${{ parameters.PASSWORD }} | docker login -u ${{ parameters.USERNAME }} ${{ parameters.REGISTRY }} --password-stdin ; `
+          docker login -u ${{ parameters.USERNAME }} -p ${{ parameters.PASSWORD }} ${{ parameters.REGISTRY }} ; `
 
           ${{ parameters.COUNT }}..${{ parameters.AGENT_AMOUNT }} | ForEach-Object {
           
