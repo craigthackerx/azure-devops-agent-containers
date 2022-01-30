@@ -12,7 +12,7 @@ jobs:
       USERNAME: $(USERNAME)
       PASSWORD: $(PASSWORD)
       NORMAL_USER: $(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)
-      CONTEXT: "../devops-agents/linux/rhel8/agent"
+      CONTEXT: "devops-agents/linux/rhel8/agent"
       DOCKERFILE_NAME: "Agent.Dockerfile"
       REGISTRY: "ghcr.io"
       IMAGE_NAME: "azure-devops-agent-rhel8-agent-"

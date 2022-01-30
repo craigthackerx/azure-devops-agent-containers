@@ -98,7 +98,7 @@ jobs:
       vmImage: ${{ parameters.HOSTED_AGENT_IMAGE }}
     workspace:
       clean: all
-    displayName: Build Image - ${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }} - x${{ parameters.AGENT_AMOUNT }}
+    displayName: Build Image - ${{ parameters.IMAGE_NAME }}${{ parameters.COUNT }}-${{ parameters.AGENT_AMOUNT }}${{ parameters.TAGS }}
     timeoutInMinutes: 120
 
     steps:

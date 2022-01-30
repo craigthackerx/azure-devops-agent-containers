@@ -9,7 +9,7 @@ jobs:
     parameters:
       USERNAME: $(USERNAME)
       PASSWORD: $(PASSWORD)
-      CONTEXT: devops-agents/linux/rhel8/base
+      CONTEXT: "devops-agents/linux/rhel8/base"
       DOCKERFILE_NAME: "Base.Dockerfile"
       REGISTRY: "ghcr.io"
       PYTHON3_VERSION: "3.10.1"

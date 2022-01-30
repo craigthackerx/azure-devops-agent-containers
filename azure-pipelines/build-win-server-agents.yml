@@ -11,8 +11,8 @@ jobs:
       AGENT_AMOUNT: "3"
       USERNAME: $(USERNAME)
       PASSWORD: $(PASSWORD)
-      CONTEXT: "../devops-agents/windows/server/base"
-      DOCKERFILE_NAME: "Base.Dockerfile"
+      CONTEXT: "devops-agents/windows/server/agent"
+      DOCKERFILE_NAME: "Agent.Dockerfile"
       REGISTRY: "ghcr.io"
       IMAGE_NAME: "azure-devops-agent-win20h2-agent-"
       TAGS: ":latest"
