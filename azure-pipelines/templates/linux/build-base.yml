@@ -64,8 +64,6 @@ jobs:
       - checkout: self
 
       - bash: |
-        displayName: Run Docker Login, Build, Push and Logout
-        workingDirectory: ${{ parameters.CONTEXT }}
           
           podman login -u ${{ parameters.USERNAME }} -p ${{ parameters.PASSWORD }} ${{ parameters.REGISTRY }} && \
 
@@ -79,3 +77,5 @@ jobs:
           podman push "${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}" && \
 
           podman logout ${{ parameters.REGISTRY }}
+        displayName: Run Docker Login, Build, Push and Logout
+        workingDirectory: ${{ parameters.CONTEXT }}

@@ -69,8 +69,6 @@ parameters:
           - checkout: self
 
           - powershell: |
-            displayName: Run Docker Login, Build, Push and Logout
-            workingDirectory: ${{ parameters.CONTEXT }}
               
               docker login -u ${{ parameters.USERNAME }} -p ${{ parameters.PASSWORD }} ${{ parameters.REGISTRY }} ; `
 
@@ -85,3 +83,5 @@ parameters:
               docker push "${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}" ; `
 
               docker logout ${{ parameters.REGISTRY }}
+            displayName: Run Docker Login, Build, Push and Logout
+            workingDirectory: ${{ parameters.CONTEXT }}
