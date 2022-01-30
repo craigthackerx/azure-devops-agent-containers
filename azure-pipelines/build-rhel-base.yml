@@ -4,16 +4,13 @@ name: $(BuildDefinitionName)_$(SourceBranchName)_$(date:yyyyMMdd)$(rev:.r)
 variables:
   - group: "DOCKER_SECRETS"
 
-  - name: OS
-    value: "linux"
-
 jobs:
   - job: Image Build
     pool:
       vmImage: ubuntu-latest
     steps:
 
-    - template: /templates/$(OS)/build-base.yml
+    - template: ./templates/linux/build-base.yml
       parameters:
         USERNAME: $(USERNAME)
         PASSWORD: $(PASSWORD)

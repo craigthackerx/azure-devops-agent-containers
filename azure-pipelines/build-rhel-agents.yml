@@ -2,11 +2,8 @@
 name: $(BuildDefinitionName)_$(SourceBranchName)_$(date:yyyyMMdd)$(rev:.r)
 
 variables:
-  - name: OS
-    value: "linux"
-
   - group: "DOCKER_SECRETS"
-  - group: "$(OS)_AZURE_DEVOPS_SECRETS"
+  - group: "LINUX_AZURE_DEVOPS_SECRETS"
 
 jobs:
   - job: Image Build
@@ -14,7 +11,7 @@ jobs:
       vmImage: ubuntu-latest
     steps:
 
-    - template: /templates/$(OS)/build-agent.yml
+    - template: ./templates/linux/build-agent.yml
       parameters:
         AGENT_AMOUNT: "3"
         USERNAME: $(USERNAME)
