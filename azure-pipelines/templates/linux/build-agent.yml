@@ -1,6 +1,4 @@
 ---
-name: $(BuildDefinitionName)_$(SourceBranchName)_$(date:yyyyMMdd)$(rev:.r)
-
 parameters:
 
   - name: AGENT_AMOUNT

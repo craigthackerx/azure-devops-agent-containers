@@ -1,6 +1,4 @@
 ---
-name: $(BuildDefinitionName)_$(SourceBranchName)_$(date:yyyyMMdd)$(rev:.r)
-
 parameters:
 
   - name: USERNAME
@@ -52,14 +50,9 @@ parameters:
 
 ################## DO NOT EDIT ANYTHING PAST HERE UNLESS YOU KNOW WHAT YOU ARE DOING ##################
 
-stages:
-  #Begin Building step
-  - stage: build
-    displayName: Image Build
+    jobs:
     pool:
       vmImage: ubuntu-latest
-
-    jobs:
       - job: build_container
         workspace:
           clean: all
