@@ -6,18 +6,15 @@ variables:
 
 jobs:
   - template: ./templates/linux/build-base.yml
+    parameters:
+      USERNAME: $(USERNAME)
+      PASSWORD: $(PASSWORD)
+      CONTEXT: "../devops-agents/windows/server/agent"
+      DOCKERFILE_NAME: "Base.Dockerfile"
+      REGISTRY: "ghcr.io"
+      PYTHON3_VERSION: "3.10.1"
+      IMAGE_NAME: "azure-devops-agent-base-rhel8"
+      TAGS: ":latest"
   - job: build_container
     pool:
       vmImage: ubuntu-latest
-
-      steps:
-
-        parameters:
-        USERNAME: $(USERNAME)
-        PASSWORD: $(PASSWORD)
-        CONTEXT: "../devops-agents/windows/server/agent"
-        DOCKERFILE_NAME: "Base.Dockerfile"
-        REGISTRY: "ghcr.io"
-        PYTHON3_VERSION: "3.10.1"
-        IMAGE_NAME: "azure-devops-agent-base-rhel8"
-        TAGS: ":latest"
