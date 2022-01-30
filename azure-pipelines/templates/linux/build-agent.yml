@@ -111,6 +111,7 @@ jobs:
           
           for INDEX in $(seq ${{ parameters.COUNT }} ${{ parameters.AGENT_AMOUNT}})
           do
+          
           podman build \
           --file="${{ parameters.DOCKERFILE_NAME }}" \
           --tag="${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${INDEX}${{ parameters.TAGS }}" \
@@ -121,7 +122,8 @@ jobs:
           --build-arg AZP_AGENT_NAME="${{ parameters.AZP_AGENT_NAME }}" \
           --build-arg AZP_POOL="${{ parameters.AZP_POOL }}" \
           --build-arg AZP_WORK="${{ parameters.AZP_WORK}}"
-          podman push "${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${INDEX}${{ parameters.TAGS }}" && \
+          podman push "${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${INDEX}${{ parameters.TAGS }}"
+          
           done
           
           podman logout ${{ parameters.REGISTRY }}
