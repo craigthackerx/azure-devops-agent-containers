@@ -124,7 +124,3 @@ stages:
               done
               
               podman logout ${{ parameters.REGISTRY }}
-
-          #Cleanup agent directory
-          - task: mspremier.PostBuildCleanup.PostBuildCleanup-task.PostBuildCleanup@3
-            displayName: "Clean Agent Directories"
