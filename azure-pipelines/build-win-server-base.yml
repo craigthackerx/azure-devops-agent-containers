@@ -1,6 +1,4 @@
 ---
-triggers: none
-
 name: $(BuildDefinitionName)_$(SourceBranchName)_$(date:yyyyMMdd)$(rev:.r)
 
 variables:
