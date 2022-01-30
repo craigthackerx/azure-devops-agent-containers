@@ -57,9 +57,9 @@ parameters:
     type: string
 
   - name: SECRETS_VARIABLE_GROUP
-      displayName: "The name of the variable group holding the secrets"
-      default: "DOCKER_SECRETS"
-      type: string
+    displayName: "The name of the variable group holding the secrets"
+    default: "DOCKER_SECRETS"
+    type: string
 
   - name: USERNAME
     displayName: "Username to be passed for registry login"
