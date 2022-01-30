@@ -1,12 +1,6 @@
 name: 'Base RHEL Build'
 
 on:
-  push:
-    branches:
-      - main
-      - dev
-      - mvp
-      - feature*
   workflow_dispatch:
 
 jobs:

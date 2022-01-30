@@ -75,7 +75,7 @@ jobs:
 
       - powershell: |
           
-          docker login -u ${{ parameters.USERNAME }} -p ${{ parameters.PASSWORD }} ${{ parameters.REGISTRY }} ; `
+          Write-Output ${{ parameters.PASSWORD }} | docker login -u ${{ parameters.USERNAME }} ${{ parameters.REGISTRY }} --password-stdin ; `
 
           docker build `
           --file=${{ parameters.DOCKERFILE_NAME }} `

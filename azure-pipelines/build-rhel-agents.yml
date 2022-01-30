@@ -1,6 +1,8 @@
 ---
 name: $(BuildDefinitionName)_$(SourceBranchName)_$(date:yyyyMMdd)$(rev:.r)
 
+trigger: none
+
 variables:
   - group: "DOCKER_SECRETS"
   - group: "LINUX_AZURE_DEVOPS_SECRETS"
