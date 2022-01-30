@@ -69,24 +69,24 @@ jobs:
     displayName: Build Image - ${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}
     timeoutInMinutes: 120
 
-        steps:
+    steps:
 
-          - checkout: self
+      - checkout: self
 
-          - powershell: |
-              
-              docker login -u ${{ parameters.USERNAME }} -p ${{ parameters.PASSWORD }} ${{ parameters.REGISTRY }} ; `
+      - powershell: |
+          
+          docker login -u ${{ parameters.USERNAME }} -p ${{ parameters.PASSWORD }} ${{ parameters.REGISTRY }} ; `
 
-              docker build `
-              --file=${{ parameters.DOCKERFILE_NAME }} `
-              --tag=${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }} `
-              --build-arg ACCEPT_EULA=y `
-              --build-arg NORMAL_USER=${{ parameters.NORMAL_USER }} `
-              --build-arg PYTHON3_VERSION=${{ parameters.PYTHON3_VERSION }} `
-              . ; `
+          docker build `
+          --file=${{ parameters.DOCKERFILE_NAME }} `
+          --tag=${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }} `
+          --build-arg ACCEPT_EULA=y `
+          --build-arg NORMAL_USER=${{ parameters.NORMAL_USER }} `
+          --build-arg PYTHON3_VERSION=${{ parameters.PYTHON3_VERSION }} `
+          . ; `
 
-              docker push "${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}" ; `
+          docker push "${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}" ; `
 
-              docker logout ${{ parameters.REGISTRY }}
-            displayName: Run Docker Login, Build, Push and Logout
-            workingDirectory: ${{ parameters.CONTEXT }}
+          docker logout ${{ parameters.REGISTRY }}
+        displayName: Run Docker Login, Build, Push and Logout
+        workingDirectory: ${{ parameters.CONTEXT }}
