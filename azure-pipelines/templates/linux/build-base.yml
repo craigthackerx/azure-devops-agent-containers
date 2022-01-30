@@ -50,33 +50,33 @@ parameters:
 
 ################## DO NOT EDIT ANYTHING PAST HERE UNLESS YOU KNOW WHAT YOU ARE DOING ##################
 
-    jobs:
+jobs:
+  - job: build_container
     pool:
       vmImage: ubuntu-latest
-      - job: build_container
-        workspace:
-          clean: all
-        displayName: Image-Build-${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}
-        timeoutInMinutes: 120
+    workspace:
+      clean: all
+    displayName: Image-Build-${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}
+    timeoutInMinutes: 120
 
-        steps:
+    steps:
 
-          - bash: |
-            workingDirectory: ${{ parameters.CONTEXT }}
-              
-              podman login -u ${{ parameters.USERNAME }} -p ${{ parameters.PASSWORD }} ${{ parameters.REGISTRY }} && \
+      - bash: |
+        workingDirectory: ${{ parameters.CONTEXT }}
+          
+          podman login -u ${{ parameters.USERNAME }} -p ${{ parameters.PASSWORD }} ${{ parameters.REGISTRY }} && \
 
-              podman build \
-              --file="${{ parameters.DOCKERFILE_NAME }}" \
-              --tag="${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}" \
-              --build-arg ACCEPT_EULA="y" \
-              --build-arg PYTHON3_VERSION="${{ PYTHON3_VERSION }}" \
-              --squash && \
-    
-              podman push "${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}" && \
+          podman build \
+          --file="${{ parameters.DOCKERFILE_NAME }}" \
+          --tag="${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}" \
+          --build-arg ACCEPT_EULA="y" \
+          --build-arg PYTHON3_VERSION="${{ PYTHON3_VERSION }}" \
+          --squash && \
 
-              podman logout ${{ parameters.REGISTRY }}
+          podman push "${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}" && \
 
-          #Cleanup agent directory
-          - task: mspremier.PostBuildCleanup.PostBuildCleanup-task.PostBuildCleanup@3
-            displayName: "Clean Agent Directories"
+          podman logout ${{ parameters.REGISTRY }}
+
+      #Cleanup agent directory
+      - task: mspremier.PostBuildCleanup.PostBuildCleanup-task.PostBuildCleanup@3
+        displayName: "Clean Agent Directories"
