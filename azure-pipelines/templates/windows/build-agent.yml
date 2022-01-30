@@ -5,15 +5,10 @@ parameters:
     displayName: "The amount of agents you require"
     default: "1"
     type: string
-    values:
-      - "1"
-      - "2"
-      - "3"
-      - "4"
 
   - name: COUNT
-    default: "1"
     displayName: "The amount that the count should start at"
+    default: "1"
     type: string
 
   - name: USERNAME
@@ -82,13 +77,13 @@ parameters:
 
   - name: TAGS
     displayName: "The tag of the image"
-    type: string
     default: ":latest"
+    type: string
 
   - name: HOSTED_AGENT_IMAGE
-    displayName: "The name of the vmImage"
-    type: string
+    displayName: "The name of the vmImage for Azure Hosted Pools"
     default: "windows-2022"
+    type: string
 
 ################## DO NOT EDIT ANYTHING PAST HERE UNLESS YOU KNOW WHAT YOU ARE DOING ##################
 

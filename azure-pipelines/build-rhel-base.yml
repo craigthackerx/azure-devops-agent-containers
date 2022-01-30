@@ -21,9 +21,9 @@ parameters:
       - "Agent.Dockerfile"
 
   - name: PYTHON3_VERSION
-    displayName: "The version of python to be installed by get.scoop.sh"
-    type: string
+    displayName: "The version of python to be installed by from source"
     default: "3.10.1"
+    type: string
 
   - name: REGISTRY
     displayName: "The target registry"
@@ -38,8 +38,8 @@ parameters:
 
   - name: IMAGE_NAME
     displayName: "The name of the image"
-    type: string
     default: "azure-devops-agent-base-rhel8"
+    type: string
 
   - name: TAGS
     displayName: "The tag of the image"
@@ -48,18 +48,28 @@ parameters:
 
   - name: HOSTED_AGENT_IMAGE
     displayName: "The name of the vmImage"
-    type: string
     default: "ubuntu-latest"
+    type: string
 
   - name: SECRETS_VARIABLE_GROUP
     displayName: "The name of the variable group holding the secrets"
-    type: string
     default: "DOCKER_SECRETS"
+    type: string
+
+  - name: USERNAME
+    displayName: "Username to be passed for registry login, should reference a secret"
+    default: $(USERNAME)
+    type: string
+
+  - name: PASSWORD
+    displayName: "Password or access token for registry login, remember to store this in a keyvault or encrypted variable"
+    default: $(PASSWORD)
+    type: string
 
   - name: TEMPLATE_PATH
     displayName: "The name of the variable group holding the secrets"
-    type: string
     default: "./templates/linux/build-base.yml"
+    type: string
 
 variables:
   - group: ${{ parameters.SECRETS_VARIABLE_GROUP }}
@@ -67,8 +77,8 @@ variables:
 jobs:
   - template: ${{ parameters.TEMPLATE_PATH }}
     parameters:
-      USERNAME: $(USERNAME)
-      PASSWORD: $(PASSWORD)
+      USERNAME: ${{ parameters.USERNAME }}
+      PASSWORD: ${{ parameters.PASSWORD }}
       CONTEXT: ${{ parameters.CONTEXT }}
       DOCKERFILE_NAME: ${{ parameters.DOCKERFILE_NAME }}
       REGISTRY: ${{ parameters.REGISTRY }}

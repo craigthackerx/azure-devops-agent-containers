@@ -24,7 +24,7 @@ parameters:
       - "Agent.Dockerfile"
 
   - name: PYTHON3_VERSION
-    displayName: "The version of python to be installed by get.scoop.sh"
+    displayName: "The version of python to be installed by from source"
     type: string
     default: "3.10.1"
 
@@ -49,7 +49,7 @@ parameters:
     default: ":latest"
 
   - name: HOSTED_AGENT_IMAGE
-    displayName: "The name of the vmImage"
+    displayName: "The name of the vmImage for Azure Hosted Pools"
     type: string
     default: "ubuntu-latest"
 
