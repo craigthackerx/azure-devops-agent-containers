@@ -8,7 +8,7 @@ jobs:
   build:
 
     name: 'Container Base Build'
-    runs-on: windows-latest
+    runs-on: windows-2022
     environment: main
     env:
       CONTEXT: "devops-agents/windows/20H2/base"

@@ -8,7 +8,7 @@ jobs:
   build:
 
     name: 'Container Agent Build'
-    runs-on: windows-latest
+    runs-on: windows-2022
     environment: main
     env:
 
