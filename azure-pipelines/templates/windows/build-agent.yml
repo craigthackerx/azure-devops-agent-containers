@@ -104,6 +104,7 @@ stages:
         steps:
 
           - powershell: |
+            displayName: Run Docker Login, Build x${{ parameters.AGENT_AMOUNT }}, Push x${{ parameters.AGENT_AMOUNT }} and Logout
             workingDirectory: ${{ parameters.CONTEXT }}
               
               docker login -u ${{ parameters.USERNAME }} -p ${{ parameters.PASSWORD }} ${{ parameters.REGISTRY }} ; `

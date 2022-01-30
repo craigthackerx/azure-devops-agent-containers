@@ -62,6 +62,7 @@ jobs:
     steps:
 
       - bash: |
+        displayName: Run Docker Login, Build, Push and Logout
         workingDirectory: ${{ parameters.CONTEXT }}
           
           podman login -u ${{ parameters.USERNAME }} -p ${{ parameters.PASSWORD }} ${{ parameters.REGISTRY }} && \

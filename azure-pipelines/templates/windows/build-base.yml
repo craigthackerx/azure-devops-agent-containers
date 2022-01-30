@@ -67,6 +67,7 @@ parameters:
         steps:
 
           - powershell: |
+            displayName: Run Docker Login, Build, Push and Logout
             workingDirectory: ${{ parameters.CONTEXT }}
               
               docker login -u ${{ parameters.USERNAME }} -p ${{ parameters.PASSWORD }} ${{ parameters.REGISTRY }} ; `
