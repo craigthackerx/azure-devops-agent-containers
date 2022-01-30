@@ -1,4 +1,6 @@
 ---
+triggers: none
+
 name: $(BuildDefinitionName)_$(SourceBranchName)_$(date:yyyyMMdd)$(rev:.r)
 
 variables:
@@ -15,6 +17,3 @@ jobs:
       PYTHON3_VERSION: "@latest"
       IMAGE_NAME: "azure-devops-agent-win20h2-agent-"
       TAGS: ":latest"
-  - job: build_image
-    pool:
-      vmImage: windows-2022

@@ -1,4 +1,6 @@
 ---
+triggers: none
+
 name: $(BuildDefinitionName)_$(SourceBranchName)_$(date:yyyyMMdd)$(rev:.r)
 
 variables:
@@ -22,6 +24,3 @@ jobs:
       AZP_POOL: $(AZP_POOL)
       AZP_AGENT_NAME: $(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)
       AZP_WORK: "_work"
-  - job: build_container
-    pool:
-      vmImage: ubuntu-latest

@@ -1,4 +1,6 @@
 ---
+triggers: none
+
 name: $(BuildDefinitionName)_$(SourceBranchName)_$(date:yyyyMMdd)$(rev:.r)
 
 variables:
@@ -21,6 +23,3 @@ jobs:
       AZP_POOL: $(AZP_POOL)
       AZP_AGENT_NAME: $(Get-Random)
       AZP_WORK: "_work"
-  - job: build_image
-    pool:
-      vmImage: windows-2022

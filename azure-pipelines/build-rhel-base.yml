@@ -1,4 +1,6 @@
 ---
+triggers: none
+
 name: $(BuildDefinitionName)_$(SourceBranchName)_$(date:yyyyMMdd)$(rev:.r)
 
 variables:
@@ -15,6 +17,3 @@ jobs:
       PYTHON3_VERSION: "3.10.1"
       IMAGE_NAME: "azure-devops-agent-base-rhel8"
       TAGS: ":latest"
-  - job: build_container
-    pool:
-      vmImage: ubuntu-latest
