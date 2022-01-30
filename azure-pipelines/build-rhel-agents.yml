@@ -6,7 +6,7 @@ variables:
   - group: "LINUX_AZURE_DEVOPS_SECRETS"
 
 jobs:
-  - job: Image Build
+  - job: build_container
     pool:
       vmImage: ubuntu-latest
     steps:

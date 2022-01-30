@@ -5,7 +5,7 @@ variables:
   - group: "DOCKER_SECRETS"
 
 jobs:
-  - job: Image Build
+  - job: build_container
     pool:
       vmImage: ubuntu-latest
     steps:
