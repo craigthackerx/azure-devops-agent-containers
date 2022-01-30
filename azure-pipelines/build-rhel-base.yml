@@ -12,7 +12,7 @@ parameters:
 
   - name: DOCKERFILE_NAME
     displayName: "The name of the Dockerfile"
-    default: "Dockerfile"
+    default: "Base.Dockerfile"
     type: string
     values:
       - "Dockerfile"
@@ -60,7 +60,6 @@ parameters:
     displayName: "The name of the variable group holding the secrets"
     type: string
     default: "./templates/linux/build-base.yml"
-
 
 variables:
   - group: ${{ parameters.SECRETS_VARIABLE_GROUP }}
