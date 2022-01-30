@@ -2,6 +2,8 @@ FROM mcr.microsoft.com/windows/server:ltsc2022-amd64
 
 # escape = `
 
+LABEL org.opencontainers.image.source https://github.com/craigthackerx/azure-devops-agent-containers
+
 ARG NORMAL_USER=ContainerAdministrator
 ARG PYTHON3_VERSION=@latest
 ARG ACCEPT_EULA=y
