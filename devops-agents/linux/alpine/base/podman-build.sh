@@ -7,7 +7,7 @@ USER="craigthackerx"
 IMAGE_NAME="azure-devops-agent-base-alpine"
 TAGS="latest"
 DOCKERFILE_NAME="Base.Dockerfile"
-PYTHON3_VERSION="3.9.10"
+PYTHON3_VERSION="3.10.1"
 
 DOCKER_IMAGE="${DOCKER_REPO}/${USER}/${IMAGE_NAME}:${TAGS}"
 GITHUB_IMAGE="${GITHUB_REPO}/${USER}/${IMAGE_NAME}:${TAGS}"

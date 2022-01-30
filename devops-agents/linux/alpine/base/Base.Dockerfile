@@ -92,6 +92,5 @@ COPY start.sh /azp/start.sh
 CMD [ "./start.sh" ]
 
 #Install Azure Modules for Powershell - This can take a while, so setting as final step to shorten potential rebuilds
-RUN pwsh -Command Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted ; pwsh -Command Install-Module -Name Az -Force -AllowClobber -Scope AllUsers -Repository PSGallery && \
-    apk cache clean
+RUN pwsh -Command Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted ; pwsh -Command Install-Module -Name Az -Force -AllowClobber -Scope AllUsers -Repository PSGallery
 
