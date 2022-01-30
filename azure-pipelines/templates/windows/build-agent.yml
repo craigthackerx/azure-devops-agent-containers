@@ -103,6 +103,8 @@ stages:
 
         steps:
 
+          - checkout: self
+
           - powershell: |
             displayName: Run Docker Login, Build x${{ parameters.AGENT_AMOUNT }}, Push x${{ parameters.AGENT_AMOUNT }} and Logout
             workingDirectory: ${{ parameters.CONTEXT }}

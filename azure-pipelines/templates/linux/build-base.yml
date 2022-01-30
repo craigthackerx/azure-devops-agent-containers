@@ -61,6 +61,8 @@ jobs:
 
     steps:
 
+      - checkout: self
+
       - bash: |
         displayName: Run Docker Login, Build, Push and Logout
         workingDirectory: ${{ parameters.CONTEXT }}

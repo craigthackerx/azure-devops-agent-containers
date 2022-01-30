@@ -66,6 +66,8 @@ parameters:
 
         steps:
 
+          - checkout: self
+
           - powershell: |
             displayName: Run Docker Login, Build, Push and Logout
             workingDirectory: ${{ parameters.CONTEXT }}
