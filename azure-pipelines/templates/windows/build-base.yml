@@ -84,7 +84,7 @@ jobs:
               --build-arg NORMAL_USER=${{ parameters.NORMAL_USER }} `
               --build-arg PYTHON3_VERSION=${{ parameters.PYTHON3_VERSION }} `
               . ; `
-    
+
               docker push "${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}" ; `
 
               docker logout ${{ parameters.REGISTRY }}

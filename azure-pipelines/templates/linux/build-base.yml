@@ -82,5 +82,5 @@ jobs:
           podman push "${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}" && \
 
           podman logout ${{ parameters.REGISTRY }}
-        displayName: Run Docker Login, Build, Push and Logout
+        displayName: Run Podman Login, Build, Push and Logout
         workingDirectory: ${{ parameters.CONTEXT }}
