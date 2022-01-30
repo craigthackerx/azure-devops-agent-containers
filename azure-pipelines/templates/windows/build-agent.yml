@@ -88,7 +88,7 @@ parameters:
   - name: HOSTED_AGENT_IMAGE
     displayName: "The name of the vmImage"
     type: string
-    default: "windows-latest"
+    default: "windows-2022"
 
 ################## DO NOT EDIT ANYTHING PAST HERE UNLESS YOU KNOW WHAT YOU ARE DOING ##################
 
