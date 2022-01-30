@@ -48,15 +48,20 @@ parameters:
     type: string
     default: ":latest"
 
+  - name: HOSTED_AGENT_IMAGE
+    displayName: "The name of the vmImage"
+    type: string
+    default: "ubuntu-latest"
+
 ################## DO NOT EDIT ANYTHING PAST HERE UNLESS YOU KNOW WHAT YOU ARE DOING ##################
 
 jobs:
   - job: build_container
     pool:
-      vmImage: ubuntu-latest
+      vmImage: ${{ parameters.HOSTED_AGENT_IMAGE }}
     workspace:
       clean: all
-    displayName: Image-Build-${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}
+    displayName: Build Image - ${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}
     timeoutInMinutes: 120
 
     steps:

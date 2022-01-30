@@ -85,48 +85,48 @@ parameters:
     type: string
     default: ":latest"
 
+  - name: HOSTED_AGENT_IMAGE
+    displayName: "The name of the vmImage"
+    type: string
+    default: "windows-latest"
+
 ################## DO NOT EDIT ANYTHING PAST HERE UNLESS YOU KNOW WHAT YOU ARE DOING ##################
 
-stages:
-  #Begin Building step
-  - stage: build
-    displayName: Image Build
+jobs:
+  - job: build_container
     pool:
-      vmImage: windows-2022
+      vmImage: ${{ parameters.HOSTED_AGENT_IMAGE }}
+    workspace:
+      clean: all
+    displayName: Build Image - ${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }} - x${{ parameters.AGENT_AMOUNT }}
+    timeoutInMinutes: 120
 
-    jobs:
-      - job: build_container
-        workspace:
-          clean: all
-        displayName: Image-Build-${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}
-        timeoutInMinutes: 120
+    steps:
 
-        steps:
+      - checkout: self
 
-          - checkout: self
-
-          - powershell: |
-              
-              docker login -u ${{ parameters.USERNAME }} -p ${{ parameters.PASSWORD }} ${{ parameters.REGISTRY }} ; `
-              
-              ${{ parameters.COUNT }}..${{ parameters.AGENT_AMOUNT }} | ForEach-Object {
-              
-                docker build `
-                --file=${{ parameters.DOCKERFILE_NAME }} `
-                --tag="${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}_$${{ parameters.TAGS }}" `
-                --build-arg ACCEPT_EULA=y `
-                --build-arg NORMAL_USER=${{ parameters.NORMAL_USER }} `
-                --build-arg AZP_URL=${{ parameters.AZP_URL }} `
-                --build-arg AZP_TOKEN=${{ parameters.AZP_TOKEN }} `
-                --build-arg AZP_AGENT_NAME=${{ parameters.AZP_AGENT_NAME }} `
-                --build-arg AZP_POOL=${{ parameters.AZP_POOL }} `
-                --build-arg AZP_WORK=${{ parameters.AZP_WORK }} `
-                . ; `
-      
-                docker push "${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}_$${{ parameters.TAGS }}" ; `
-              
-              }
-              
-              docker logout ${{ parameters.REGISTRY }}
-            displayName: Run Docker Login, Build x${{ parameters.AGENT_AMOUNT }}, Push x${{ parameters.AGENT_AMOUNT }} and Logout
-            workingDirectory: ${{ parameters.CONTEXT }}
+      - powershell: |
+          
+          docker login -u ${{ parameters.USERNAME }} -p ${{ parameters.PASSWORD }} ${{ parameters.REGISTRY }} ; `
+          
+          ${{ parameters.COUNT }}..${{ parameters.AGENT_AMOUNT }} | ForEach-Object {
+          
+            docker build `
+            --file=${{ parameters.DOCKERFILE_NAME }} `
+            --tag="${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}_$${{ parameters.TAGS }}" `
+            --build-arg ACCEPT_EULA=y `
+            --build-arg NORMAL_USER=${{ parameters.NORMAL_USER }} `
+            --build-arg AZP_URL=${{ parameters.AZP_URL }} `
+            --build-arg AZP_TOKEN=${{ parameters.AZP_TOKEN }} `
+            --build-arg AZP_AGENT_NAME=${{ parameters.AZP_AGENT_NAME }} `
+            --build-arg AZP_POOL=${{ parameters.AZP_POOL }} `
+            --build-arg AZP_WORK=${{ parameters.AZP_WORK }} `
+            . ; `
+  
+            docker push "${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}_$${{ parameters.TAGS }}" ; `
+          
+          }
+          
+          docker logout ${{ parameters.REGISTRY }}
+        displayName: Run Docker Login, Build x${{ parameters.AGENT_AMOUNT }}, Push x${{ parameters.AGENT_AMOUNT }} and Logout
+        workingDirectory: ${{ parameters.CONTEXT }}

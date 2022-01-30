@@ -53,16 +53,21 @@ parameters:
     type: string
     default: ":latest"
 
+  - name: HOSTED_AGENT_IMAGE
+    displayName: "The name of the vmImage"
+    type: string
+    default: "windows-2022"
+
 ################## DO NOT EDIT ANYTHING PAST HERE UNLESS YOU KNOW WHAT YOU ARE DOING ##################
 
-    jobs:
+jobs:
+  - job: build_container
     pool:
-      vmImage: windows-2022
-      - job: build_container
-        workspace:
-          clean: all
-        displayName: Image-Build-${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}
-        timeoutInMinutes: 120
+      vmImage: ${{ parameters.HOSTED_AGENT_IMAGE }}
+    workspace:
+      clean: all
+    displayName: Build Image - ${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}
+    timeoutInMinutes: 120
 
         steps:
 
