@@ -6,23 +6,22 @@ variables:
   - group: "WINDOWS_AZURE_DEVOPS_SECRETS"
 
 jobs:
-  - job: Image Build
+  - template: ./templates/windows/build-agent.yml
+  - job: build_image
     pool:
       vmImage: windows-2022
-    steps:
-
-    - template: ./templates/windows/build-agent.yml
-      parameters:
-        AGENT_AMOUNT: "3"
-        USERNAME: $(USERNAME)
-        PASSWORD: $(PASSWORD)
-        CONTEXT: "../devops-agents/windows/server/base"
-        DOCKERFILE_NAME: "Base.Dockerfile"
-        REGISTRY: "ghcr.io"
-        IMAGE_NAME: "azure-devops-agent-win20h2-agent-"
-        TAGS: ":latest"
-        AZP_URL: $(AZP_URL)
-        AZP_TOKEN: $(AZP_TOKEN)
-        AZP_POOL: $(AZP_POOL)
-        AZP_AGENT_NAME: $(Get-Random)
-        AZP_WORK: "_work"
+      steps:
+        parameters:
+          AGENT_AMOUNT: "3"
+          USERNAME: $(USERNAME)
+          PASSWORD: $(PASSWORD)
+          CONTEXT: "../devops-agents/windows/server/base"
+          DOCKERFILE_NAME: "Base.Dockerfile"
+          REGISTRY: "ghcr.io"
+          IMAGE_NAME: "azure-devops-agent-win20h2-agent-"
+          TAGS: ":latest"
+          AZP_URL: $(AZP_URL)
+          AZP_TOKEN: $(AZP_TOKEN)
+          AZP_POOL: $(AZP_POOL)
+          AZP_AGENT_NAME: $(Get-Random)
+          AZP_WORK: "_work"

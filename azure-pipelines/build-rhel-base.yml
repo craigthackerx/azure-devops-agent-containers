@@ -5,13 +5,14 @@ variables:
   - group: "DOCKER_SECRETS"
 
 jobs:
+  - template: ./templates/linux/build-base.yml
   - job: build_container
     pool:
       vmImage: ubuntu-latest
-    steps:
 
-    - template: ./templates/linux/build-base.yml
-      parameters:
+      steps:
+
+        parameters:
         USERNAME: $(USERNAME)
         PASSWORD: $(PASSWORD)
         CONTEXT: "../devops-agents/windows/server/agent"
