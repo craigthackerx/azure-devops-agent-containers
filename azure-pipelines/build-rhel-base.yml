@@ -3,17 +3,76 @@ name: $(BuildDefinitionName)_$(SourceBranchName)_$(date:yyyyMMdd)$(rev:.r)
 
 trigger: none
 
+parameters:
+
+  - name: CONTEXT
+    displayName: "The the path to your dockerfile"
+    default: "devops-agents/linux/rhel8/base"
+    type: string
+
+  - name: DOCKERFILE_NAME
+    displayName: "The name of the Dockerfile"
+    default: "Dockerfile"
+    type: string
+    values:
+      - "Dockerfile"
+      - "Containerfile"
+      - "Base.Dockerfile"
+      - "Agent.Dockerfile"
+
+  - name: PYTHON3_VERSION
+    displayName: "The version of python to be installed by get.scoop.sh"
+    type: string
+    default: "3.10.1"
+
+  - name: REGISTRY
+    displayName: "The target registry"
+    default: "ghcr.io"
+    type: string
+    values:
+      - "ghcr.io"
+      - "docker.io"
+      - "quay.io"
+      - "registry.redhat.com"
+      - "azurecr.io"
+
+  - name: IMAGE_NAME
+    displayName: "The name of the image"
+    type: string
+    default: "azure-devops-agent-base-rhel8"
+
+  - name: TAGS
+    displayName: "The tag of the image"
+    type: string
+    default: ":latest"
+
+  - name: HOSTED_AGENT_IMAGE
+    displayName: "The name of the vmImage"
+    type: string
+    default: "ubuntu-latest"
+
+  - name: SECRETS_VARIABLE_GROUP
+    displayName: "The name of the variable group holding the secrets"
+    type: string
+    default: "DOCKER_SECRETS"
+
+  - name: TEMPLATE_PATH
+    displayName: "The name of the variable group holding the secrets"
+    type: string
+    default: "./templates/linux/build-base.yml"
+
+
 variables:
-  - group: "DOCKER_SECRETS"
+  - group: ${{ parameters.SECRETS_VARIABLE_GROUP }}
 
 jobs:
-  - template: ./templates/linux/build-base.yml
+  - template: ${{ parameters.TEMPLATE_PATH }}
     parameters:
       USERNAME: $(USERNAME)
       PASSWORD: $(PASSWORD)
-      CONTEXT: "devops-agents/linux/rhel8/base"
-      DOCKERFILE_NAME: "Base.Dockerfile"
-      REGISTRY: "ghcr.io"
-      PYTHON3_VERSION: "3.10.1"
-      IMAGE_NAME: "azure-devops-agent-base-rhel8"
-      TAGS: ":latest"
+      CONTEXT: ${{ parameters.CONTEXT }}
+      DOCKERFILE_NAME: ${{ parameters.DOCKERFILE_NAME }}
+      REGISTRY: ${{ parameters.REGISTRY }}
+      PYTHON3_VERSION: ${{ parameters.PYTHON3_VERSION }}
+      IMAGE_NAME: ${{ parameters.IMAGE_NAME }}
+      TAGS: ${{ parameters.TAGS }}
