@@ -68,7 +68,7 @@ parameters:
 
   - name: TEMPLATE_PATH
     displayName: "The name of the variable group holding the secrets"
-    default: "../../../../azure-pipelines/templates/windows/build-lite-ase.yml"
+    default: "../../../../azure-pipelines/templates/windows/build-lite-base.yml"
     type: string
 
 variables:
@@ -82,6 +82,5 @@ jobs:
       CONTEXT: ${{ parameters.CONTEXT }}
       DOCKERFILE_NAME: ${{ parameters.DOCKERFILE_NAME }}
       REGISTRY: ${{ parameters.REGISTRY  }}
-      PYTHON3_VERSION: ${{ parameters.PYTHON3_VERSION }}
       IMAGE_NAME: ${{ parameters.IMAGE_NAME }}
       TAGS: ${{ parameters.TAGS }}
