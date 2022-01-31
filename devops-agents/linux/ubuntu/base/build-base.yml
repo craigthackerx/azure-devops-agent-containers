@@ -7,7 +7,7 @@ parameters:
 
   - name: CONTEXT
     displayName: "The the path to your dockerfile"
-    default: "devops-agents/linux/alpine/base"
+    default: "devops-agents/linux/rhel8/base"
     type: string
 
   - name: DOCKERFILE_NAME
@@ -38,7 +38,7 @@ parameters:
 
   - name: IMAGE_NAME
     displayName: "The name of the image"
-    default: "azure-devops-agent-base-alpine"
+    default: "azure-devops-agent-base-rhel8"
     type: string
 
   - name: TAGS
@@ -68,7 +68,7 @@ parameters:
 
   - name: TEMPLATE_PATH
     displayName: "The name of the variable group holding the secrets"
-    default: "./templates/linux/build-base.yml"
+    default: "../../../../azure-pipelines/templates/linux/build-base.yml"
     type: string
 
 variables:

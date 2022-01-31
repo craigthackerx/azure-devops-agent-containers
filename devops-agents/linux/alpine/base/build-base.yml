@@ -7,7 +7,7 @@ parameters:
 
   - name: CONTEXT
     displayName: "The the path to your dockerfile"
-    default: "devops-agents/windows/server/base"
+    default: "devops-agents/linux/alpine/base"
     type: string
 
   - name: DOCKERFILE_NAME
@@ -21,8 +21,8 @@ parameters:
       - "Agent.Dockerfile"
 
   - name: PYTHON3_VERSION
-    displayName: "The version of python to be installed by from get.scoop.sh"
-    default: "@latest"
+    displayName: "The version of python to be installed by from source"
+    default: "3.10.1"
     type: string
 
   - name: REGISTRY
@@ -38,7 +38,7 @@ parameters:
 
   - name: IMAGE_NAME
     displayName: "The name of the image"
-    default: "azure-devops-agent-base-winseverltsc2022"
+    default: "azure-devops-agent-base-alpine"
     type: string
 
   - name: TAGS
@@ -48,7 +48,7 @@ parameters:
 
   - name: HOSTED_AGENT_IMAGE
     displayName: "The name of the vmImage"
-    default: "windows-2022"
+    default: "ubuntu-latest"
     type: string
 
   - name: SECRETS_VARIABLE_GROUP
@@ -68,7 +68,7 @@ parameters:
 
   - name: TEMPLATE_PATH
     displayName: "The name of the variable group holding the secrets"
-    default: "./templates/windows/build-base.yml"
+    default: "../../../../azure-pipelines/templates/linux/build-base.yml"
     type: string
 
 variables:
@@ -81,7 +81,7 @@ jobs:
       PASSWORD: ${{ parameters.PASSWORD }}
       CONTEXT: ${{ parameters.CONTEXT }}
       DOCKERFILE_NAME: ${{ parameters.DOCKERFILE_NAME }}
-      REGISTRY: ${{ parameters.REGISTRY  }}
+      REGISTRY: ${{ parameters.REGISTRY }}
       PYTHON3_VERSION: ${{ parameters.PYTHON3_VERSION }}
       IMAGE_NAME: ${{ parameters.IMAGE_NAME }}
       TAGS: ${{ parameters.TAGS }}

@@ -1,6 +1,8 @@
-FROM mcr.microsoft.com/windows:20H2
+FROM mcr.microsoft.com/windows/server:ltsc2022-amd64
 
 # escape = `
+
+LABEL org.opencontainers.image.source https://github.com/craigthackerx/azure-devops-agent-containers
 
 ARG NORMAL_USER=ContainerAdministrator
 ARG PYTHON3_VERSION=@latest
@@ -35,7 +37,7 @@ RUN Set-ExecutionPolicy Unrestricted ;  \
     python -m pip install --upgrade pip ; \
     pip3 install azure-cli
 
-ENV PATH "C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Users\ContainerAdministrator\AppData\Local\Microsoft\WindowsApps;;C:\ProgramData\chocolatey\bin;C:\Users"\\${NORMAL_USER}"\scoop\shims;C:\Program Files\PowerShell\7;"
+ENV PATH "C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Users\ContainerAdministrator\AppData\Local\Microsoft\WindowsApps;;C:\ProgramData\chocolatey\bin;C:\Users"\\${NORMAL_USER}"\scoop\shims;C:\Program Files\PowerShell\7;C:\Users"\\${NORMAL_USER}"\scoop\apps\python\current\Scripts\;"
 
 #Use Powershell Core instead of 5
 SHELL ["pwsh", "-Command"]

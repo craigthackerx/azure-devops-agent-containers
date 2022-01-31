@@ -68,7 +68,7 @@ parameters:
 
   - name: TEMPLATE_PATH
     displayName: "The name of the variable group holding the secrets"
-    default: "./templates/linux/build-base.yml"
+    default: "../../../../azure-pipelines/templates/linux/build-base.yml"
     type: string
 
 variables:
