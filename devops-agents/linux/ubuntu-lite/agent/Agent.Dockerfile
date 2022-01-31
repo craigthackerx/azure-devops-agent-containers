@@ -1,5 +1,5 @@
 #Use base image
-FROM ghcr.io/craigthackerx/azure-devops-agent-base-ubuntu:latest
+FROM ghcr.io/craigthackerx/azure-devops-agent-base-ubuntu-lite:latest
 
 #Set args with blank values - these will be over-written with the CLI
 ARG AZP_URL=https://dev.azure.com/Example
