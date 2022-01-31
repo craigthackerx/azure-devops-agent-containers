@@ -16,6 +16,7 @@ ENV AZP_AGENT_NAME ${AZP_AGENT_NAME}
 ENV AZP_POOL ${AZP_POOL}
 ENV AZP_WORK ${AZP_WORK}
 ENV NORMAL_USER ${NORMAL_USER}
+ENV DEBIAN_FRONTEND="noninteractive"
 
 #Install tooling with root
 RUN terraformLatestVersion=$(curl -sL https://releases.hashicorp.com/terraform/index.json | jq -r '.versions[].builds[].url' | egrep -v 'rc|beta|alpha' | egrep 'linux.*amd64'  | tail -1) && \
