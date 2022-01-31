@@ -1,5 +1,5 @@
 #Use base image
-FROM ghcr.io/craigthackerx/azure-devops-agent-base-alpine-tiny:latest
+FROM ghcr.io/craigthackerx/azure-devops-agent-base-alpine-lite:latest
 
 #Set args with blank values - these will be over-written with the CLI
 ARG AZP_URL=https://dev.azure.com/Example

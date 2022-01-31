@@ -12,7 +12,7 @@ parameters:
 
   - name: CONTEXT
     displayName: "The the path to your dockerfile"
-    default: "devops-agents/linux/alpine-tiny/agent"
+    default: "Old/linux/alpine-lite/agent"
     type: string
 
   - name: DOCKERFILE_NAME
@@ -43,7 +43,7 @@ parameters:
 
   - name: IMAGE_NAME
     displayName: "The name of the image"
-    default: "azure-devops-agent-alpine-tiny-agent-"
+    default: "azure-devops-agent-alpine-lite-agent-"
     type: string
 
   - name: TAGS
