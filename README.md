@@ -60,3 +60,7 @@ This repo has 2 main concepts:
   - You should consider container security, for example, running the container as a non-root user and having least privileged where possible, this example uses a `NORMAL_USER` for its `CMD` context when the container starts, so this user must be made and have the `USER` directive set, as well as `PATH` updated.  Always check the upstream base image for vulnerabilities before building agents on top.
   - Users are generated using some form of random entropy with a input argument, to ensure conflict would be close to impossible - if you want to hard-code your agent name, you can do this with an `--build-arg`
   - Consider your labels, these examples use [podman](https://docs.podman.io) and use [podman-auto-update](https://docs.podman.io/en/latest/markdown/podman-auto-update.1.html) to help with CI/CD.  Similar functionality can be done with [containrrr/watchtower](https://github.com/containrrr/watchtower)
+
+
+
+The difference of the lite images and the standard is they do not have python or any packages that I have installed on them, they are essentially blank with some dependencies to run the agent package
