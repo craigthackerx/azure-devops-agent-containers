@@ -1,0 +1,80 @@
+---
+parameters:
+
+  - name: USERNAME
+    displayName: "Username to be passed for registry login"
+    type: string
+
+  - name: PASSWORD
+    displayName: "Password or access token for registry login, remember to store this in a keyvault or encrypted variable"
+    type: string
+
+  - name: CONTEXT
+    displayName: "The the path to your dockerfile"
+    type: string
+
+  - name: DOCKERFILE_NAME
+    displayName: "The name of the Dockerfile"
+    default: "Dockerfile"
+    type: string
+    values:
+      - "Dockerfile"
+      - "Containerfile"
+      - "Base.Dockerfile"
+      - "Agent.Dockerfile"
+
+  - name: REGISTRY
+    displayName: "The target registry"
+    default: "ghcr.io"
+    type: string
+    values:
+      - "ghcr.io"
+      - "docker.io"
+      - "quay.io"
+      - "registry.redhat.com"
+      - "azurecr.io"
+
+  - name: IMAGE_NAME
+    displayName: "The name of the image"
+    type: string
+
+  - name: TAGS
+    displayName: "The tag of the image"
+    type: string
+    default: ":latest"
+
+  - name: HOSTED_AGENT_IMAGE
+    displayName: "The name of the vmImage for Azure Hosted Pools"
+    type: string
+    default: "ubuntu-latest"
+
+################## DO NOT EDIT ANYTHING PAST HERE UNLESS YOU KNOW WHAT YOU ARE DOING ##################
+
+jobs:
+  - job: build_container
+    pool:
+      vmImage: ${{ parameters.HOSTED_AGENT_IMAGE }}
+    workspace:
+      clean: all
+    displayName: Build Image - ${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}
+    timeoutInMinutes: 120
+
+    steps:
+
+      - checkout: self
+
+      - bash: |
+          
+          podman login -u ${{ parameters.USERNAME }} -p ${{ parameters.PASSWORD }} ${{ parameters.REGISTRY }} && \
+
+          podman build \
+          --file="${{ parameters.DOCKERFILE_NAME }}" \
+          --tag="${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}" \
+          --build-arg ACCEPT_EULA="y" \
+          --squash && \
+
+          podman push "${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}" && \
+
+          podman logout ${{ parameters.REGISTRY }}
+        displayName: Run Podman Login, Build, Push and Logout
+        workingDirectory: ${{ parameters.CONTEXT }}
