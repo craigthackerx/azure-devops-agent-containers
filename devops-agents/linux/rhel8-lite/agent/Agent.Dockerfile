@@ -19,7 +19,8 @@ ENV NORMAL_USER ${NORMAL_USER}
 
 #Make unpriviledged user
 RUN useradd -ms /bin/bash ${NORMAL_USER} && \
-    chown -R ${NORMAL_USER} /azp
+    chown -R ${NORMAL_USER} /azp && \
+    chmod +x start.sh
 
 #Set as unpriviledged user for default container execution
 USER ${NORMAL_USER}

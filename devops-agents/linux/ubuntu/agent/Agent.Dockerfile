@@ -25,14 +25,15 @@ RUN terraformLatestVersion=$(curl -sL https://releases.hashicorp.com/terraform/i
     mv terraform /usr/local/bin && \
     packerLatestVersion=$(curl -sL https://releases.hashicorp.com/packer/index.json | jq -r '.versions[].builds[].url' | egrep -v 'rc|beta|alpha' | egrep 'linux.*amd64'  | tail -1) && \
     wget "${packerLatestVersion}" && \
-    unzip packer* && rm -rf terraform*.zip && \
+    unzip packer* && rm -rf packer*.zip && \
     mv packer /usr/local/bin && \
     apt-get clean && apt-get autoremove
 
 
 #Make unpriviledged user
 RUN useradd -ms /bin/bash ${NORMAL_USER} && \
-    chown -R ${NORMAL_USER} /azp
+    chown -R ${NORMAL_USER} /azp && \
+    chmod +x start.sh
 
 #Set as unpriviledged user for default container execution
 USER ${NORMAL_USER}
