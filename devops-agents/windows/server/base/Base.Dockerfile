@@ -28,8 +28,8 @@ RUN Set-ExecutionPolicy Unrestricted ;  \
     scoop install \
     curl \
     dark \
-    lessmsi \
     jq \
+    lessmsi \
     python${PYTHON3_VERSION} \
     sed \
     which \

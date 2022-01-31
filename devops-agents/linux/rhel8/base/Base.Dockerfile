@@ -22,14 +22,14 @@ RUN mkdir -p /azp && \
     ca-certificates \
     curl \
     gcc \
+    git \
     gnupg \
     gnupg2 \
-    git \
     jq \
     libffi-devel \
     make \
-    sqlite-devel \
     openssl-devel \
+    sqlite-devel \
     unzip \
     wget \
     zip  \

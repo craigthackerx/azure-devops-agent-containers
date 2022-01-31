@@ -19,8 +19,10 @@ ENV AZP_POOL ${AZP_POOL}
 ENV AZP_WORK ${AZP_WORK}
 ENV NORMAL_USER ${NORMAL_USER}
 
-RUN scoop install terraform packer ; \
+RUN scoop install \
+    terraform \
+    packer ; \
     pip3 install \
-    terraform-compliance \
+    black \
     checkov \
-    black
+    terraform-compliance

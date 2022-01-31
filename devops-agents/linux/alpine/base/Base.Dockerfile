@@ -18,24 +18,25 @@ USER root
 RUN mkdir -p /azp && \
     apk add --no-cache \
     bash \
-    bzip2 \
     bluez-dev \
+    bzip2 \
     bzip2-dev \
-    coreutils \
     ca-certificates \
+    coreutils \
     curl \
-    dpkg-dev \
     dpkg \
+    dpkg-dev \
     expat-dev \
     findutils \
+    g++ \
     gcc \
     gdbm-dev \
     gdm-dev \
-    gnupg \
     git \
-    g++ \
+    gnupg \
     icu-libs \
     jq \
+    krb5-libs \
     less \
     libc-dev \
     libffi \
@@ -43,32 +44,34 @@ RUN mkdir -p /azp && \
     libgcc \
     libintl \
     libnsl-dev \
-    libssl1.1 \
     libressl-dev \
+    libssl1.1 \
+    libstdc++ \
     libstdc++ \
     libtirpc-dev \
     linux-headers \
     make \
-    ncurses-terminfo-base \
     ncurses-dev \
+    ncurses-terminfo-base \
     nss \
+    openssl \
     openssl-dev \
     pax-utils \
     readline-dev \
     sqlite-dev \
+    sudo \
     tar \
     tcl-dev \
     tk \
     tk-dev \
-    util-linux-dev \
-    sudo \
     tzdata \
-    openssl \
     unzip \
     userspace-rcu \
+    util-linux-dev \
     wget \
     xz-dev \
     zip  \
+    zlib \
     zlib-dev && \
               wget https://www.python.org/ftp/python/${PYTHON3_VERSION}/Python-${PYTHON3_VERSION}.tgz && \
               tar xzf Python-${PYTHON3_VERSION}.tgz && rm -rf tar xzf Python-${PYTHON3_VERSION}.tgz && \

@@ -38,7 +38,7 @@ ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/${N
 
 #Install User Packages
 RUN pip3 install --user \
-    virtualenv \
-    pipenv \
     checkov \
-    terraform-compliance
+    pipenv \
+    terraform-compliance \
+    virtualenv
