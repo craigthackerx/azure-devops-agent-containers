@@ -47,7 +47,7 @@ RUN mkdir -p /azp && \
                 pip3 install --upgrade pip && \
                 pip3 install azure-cli && \
                 pip3 install --upgrade azure-cli && \
-wget -q https://packages.microsoft.com/config/debian/$(grep -oP '(?<=^DISTRIB_RELEASE=).+' /etc/lsb-release | tr -d '"')/packages-microsoft-prod.deb && \
+wget -q https://packages.microsoft.com/config/debian/$(grep -oP '(?<=^VERSION_ID=).+' /etc/os-release | tr -d '"')/packages-microsoft-prod.deb && \
 dpkg -i packages-microsoft-prod.deb && \
 apt-get update && \
 apt-get install -y powershell
