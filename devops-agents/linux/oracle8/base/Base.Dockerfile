@@ -1,5 +1,5 @@
 #Use supplier image
-FROM docker.io/orackelinux:8
+FROM docker.io/oraclelinux:8
 
 LABEL org.opencontainers.image.source https://github.com/craigthackerx/azure-devops-agent-containers
 
