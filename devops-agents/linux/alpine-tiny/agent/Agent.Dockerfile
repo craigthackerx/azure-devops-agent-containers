@@ -25,7 +25,9 @@ RUN terraformLatestVersion=$(curl -sL https://releases.hashicorp.com/terraform/i
 
 #Make unpriviledged user
 RUN addgroup -S ${NORMAL_USER} && adduser -s /bin/bash -S ${NORMAL_USER} -G ${NORMAL_USER} && \
-    chown -R ${NORMAL_USER}:${NORMAL_USER} /azp
+    chown -R ${NORMAL_USER}:${NORMAL_USER} /azp && \
+    touch /home/${NORMAL_USER}/.bashrc && \
+    chmod +x /azp/start.sh
 
 #Set as unpriviledged user for default container execution
 USER ${NORMAL_USER}
