@@ -3,7 +3,7 @@ services:
 
   agent-1:
     build: ./Agent.Dockerfile
-    image: "ghcr.io/craigthackerx/azure-devops-agent-alpine-agent-1:latest"
+    image: "ghcr.io/craigthackerx/azure-devops-agent-winseverltsc2022-agent-1:latest"
     container_name: "agent-1"
     restart: unless-stopped
     labels:
@@ -12,7 +12,7 @@ services:
 
   agent-2:
     build: ./Agent.Dockerfile
-    image: "ghcr.io/craigthackerx/azure-devops-agent-alpine-agent-2:latest"
+    image: "ghcr.io/craigthackerx/azure-devops-agent-winseverltsc2022-agent-1:latest"
     container_name: "agent-2"
     restart: unless-stopped
     labels:
@@ -21,7 +21,7 @@ services:
 
   agent-3:
     build: ./Agent.Dockerfile
-    image: "ghcr.io/craigthackerx/azure-devops-agent-alpine-agent-3:latest"
+    image: "ghcr.io/craigthackerx/azure-devops-agent-winseverltsc2022-agent-1:latest"
     container_name: "agent-3"
     restart: unless-stopped
     labels:

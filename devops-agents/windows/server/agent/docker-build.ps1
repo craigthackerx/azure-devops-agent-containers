@@ -4,7 +4,7 @@ Set-PSDebug -Trace 1
 
 $REGISTRY = "ghcr.io"
 $USER = "craigthackerx"
-$IMAGE_NAME = "azure-devops-agent-server:ltsc2022-agent-"
+$IMAGE_NAME = "azure-devops-agent-winseverltsc2022-agent-"
 $TAGS = ":latest"
 $DOCKERFILE_NAME = "Agent.Dockerfile"
 
