@@ -7,7 +7,7 @@ parameters:
 
   - name: CONTEXT
     displayName: "The the path to your dockerfile"
-    default: "devops-agents/linux/ubuntu/base"
+    default: "devops-agents/linux/ubuntu-lite/base"
     type: string
 
   - name: DOCKERFILE_NAME
