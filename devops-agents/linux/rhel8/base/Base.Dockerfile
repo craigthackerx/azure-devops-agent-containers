@@ -27,6 +27,7 @@ RUN mkdir -p /azp && \
     gnupg2 \
     jq \
     libffi-devel \
+    libicu-devel \
     make \
     openssl-devel \
     sqlite-devel \

@@ -27,6 +27,7 @@ RUN mkdir -p /azp && \
     git \
     jq \
     libffi-dev \
+    libicu-dev \
     make \
     software-properties-common \
     libsqlite3-dev \
