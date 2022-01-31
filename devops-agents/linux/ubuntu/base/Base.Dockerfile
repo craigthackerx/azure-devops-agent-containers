@@ -1,5 +1,5 @@
 #Use supplier image
-FROM registry.access.redhat.com/ubi8/ubi:latest
+FROM ubuntu:latest
 
 LABEL org.opencontainers.image.source https://github.com/craigthackerx/azure-devops-agent-containers
 
@@ -16,9 +16,10 @@ USER root
 
 #Install needed packages as well as setup python with args and pip
 RUN mkdir -p /azp && \
-    yum update -y && yum upgrade -y && yum install -y yum-utils dnf sudo && sudo yum install -y \
+    apt-get update -y && apt-get dist-upgrade -y && apt-get install -y \
+    apt-transport-https \
     bash \
-    bzip2-devel \
+    bzip2-dev \
     ca-certificates \
     curl \
     gcc \
@@ -26,10 +27,11 @@ RUN mkdir -p /azp && \
     gnupg2 \
     git \
     jq \
-    libffi-devel \
+    libffi-dev \
     make \
-    sqlite-devel \
-    openssl-devel \
+    software-properties-common \
+    sqlite-dev \
+    openssl-dev\
     unzip \
     wget \
     zip  \
@@ -43,8 +45,10 @@ RUN mkdir -p /azp && \
                 pip3 install --upgrade pip && \
                 pip3 install azure-cli && \
                 pip3 install --upgrade azure-cli && \
-curl https://packages.microsoft.com/config/rhel/7/prod.repo | sudo tee /etc/yum.repos.d/microsoft.repo && \
-yum install -y powershell
+wget -q https://packages.microsoft.com/config/ubuntu/$(lsb_release -a)/packages-microsoft-prod.deb && \
+dpkg -i packages-microsoft-prod.deb && \
+apt-get update && \
+apt-get install -y powershell
 
 #Prepare container for Azure DevOps script execution
 WORKDIR /azp
@@ -53,5 +57,5 @@ CMD [ "./start.sh" ]
 
 #Install Azure Modules for Powershell - This can take a while, so setting as final step to shorten potential rebuilds
 RUN pwsh -Command Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted ; pwsh -Command Install-Module -Name Az -Force -AllowClobber -Scope AllUsers -Repository PSGallery && \
-    yum clean all && microdnf clean all && [ ! -d /var/cache/yum ] || rm -rf /var/cache/yum
+    apt-get clean && apt-get autoremove
 

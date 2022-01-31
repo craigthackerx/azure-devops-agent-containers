@@ -3,7 +3,7 @@
 GITHUB_REPO="ghcr.io"
 
 USER="craigthackerx"
-IMAGE_NAME="azure-devops-agent-rhel8-agent-"
+IMAGE_NAME="azure-devops-agent-ubuntu-agent-"
 TAGS="latest"
 DOCKERFILE_NAME="Agent.Dockerfile"
 

@@ -7,7 +7,7 @@ parameters:
 
   - name: CONTEXT
     displayName: "The the path to your dockerfile"
-    default: "devops-agents/linux/rhel8/base"
+    default: "devops-agents/linux/ubuntu/base"
     type: string
 
   - name: DOCKERFILE_NAME
@@ -38,7 +38,7 @@ parameters:
 
   - name: IMAGE_NAME
     displayName: "The name of the image"
-    default: "azure-devops-agent-base-rhel8"
+    default: "azure-devops-agent-base-ubuntu"
     type: string
 
   - name: TAGS

@@ -4,7 +4,7 @@ DOCKER_REPO="docker.io"
 GITHUB_REPO="ghcr.io"
 
 USER="craigthackerx"
-IMAGE_NAME="azure-devops-agent-base-rhel8"
+IMAGE_NAME="azure-devops-agent-base-ubuntu"
 TAGS="latest"
 DOCKERFILE_NAME="Base.Dockerfile"
 PYTHON3_VERSION="3.9.10"

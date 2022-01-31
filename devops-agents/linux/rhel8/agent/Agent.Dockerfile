@@ -22,8 +22,10 @@ RUN terraformLatestVersion=$(curl -sL https://releases.hashicorp.com/terraform/i
     wget "${terraformLatestVersion}" && \
     unzip terraform* && rm -rf terraform*.zip && \
     mv terraform /usr/local/bin && \
-    yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo && \
-    yum -y install packer && \
+    packerLatestVersion=$(curl -sL https://releases.hashicorp.com/packer/index.json | jq -r '.versions[].builds[].url' | egrep -v 'rc|beta|alpha' | egrep 'linux.*amd64'  | tail -1) && \
+    wget "${packerLatestVersion}" && \
+    unzip packer* && rm -rf terraform*.zip && \
+    mv packer /usr/local/bin && \
     yum clean all && microdnf clean all && [ ! -d /var/cache/yum ] || rm -rf /var/cache/yum
 
 #Make unpriviledged user

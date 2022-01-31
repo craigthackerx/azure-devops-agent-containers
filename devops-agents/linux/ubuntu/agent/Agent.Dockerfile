@@ -1,5 +1,5 @@
 #Use base image
-FROM ghcr.io/craigthackerx/azure-devops-agent-base-rhel8:latest
+FROM ghcr.io/craigthackerx/azure-devops-agent-base-ubuntu:latest
 
 #Set args with blank values - these will be over-written with the CLI
 ARG AZP_URL=https://dev.azure.com/Example
@@ -22,9 +22,12 @@ RUN terraformLatestVersion=$(curl -sL https://releases.hashicorp.com/terraform/i
     wget "${terraformLatestVersion}" && \
     unzip terraform* && rm -rf terraform*.zip && \
     mv terraform /usr/local/bin && \
-    yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo && \
-    yum -y install packer && \
-    yum clean all && microdnf clean all && [ ! -d /var/cache/yum ] || rm -rf /var/cache/yum
+    packerLatestVersion=$(curl -sL https://releases.hashicorp.com/packer/index.json | jq -r '.versions[].builds[].url' | egrep -v 'rc|beta|alpha' | egrep 'linux.*amd64'  | tail -1) && \
+    wget "${packerLatestVersion}" && \
+    unzip packer* && rm -rf terraform*.zip && \
+    mv packer /usr/local/bin && \
+    apt-get clean && apt-get autoremove
+
 
 #Make unpriviledged user
 RUN useradd -ms /bin/bash ${NORMAL_USER} && \

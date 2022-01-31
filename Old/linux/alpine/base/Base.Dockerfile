@@ -47,7 +47,6 @@ RUN mkdir -p /azp && \
     libressl-dev \
     libssl1.1 \
     libstdc++ \
-    libstdc++ \
     libtirpc-dev \
     linux-headers \
     make \
