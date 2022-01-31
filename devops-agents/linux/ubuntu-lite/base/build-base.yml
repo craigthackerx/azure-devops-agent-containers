@@ -1,8 +1,6 @@
 ---
 name: $(BuildDefinitionName)_$(SourceBranchName)_$(date:yyyyMMdd)$(rev:.r)
 
-trigger: none
-
 parameters:
 
   - name: CONTEXT

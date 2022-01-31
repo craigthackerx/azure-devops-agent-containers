@@ -1,7 +1,7 @@
 #Use supplier image
 FROM registry.access.redhat.com/ubi8/ubi:latest
 
-LABEL org.opencontainers.image.source https://github.com/craigthackerx/azure-devops-agent-containers
+LABEL org.opencontainers.image.source=https://github.com/craigthackerx/azure-devops-agent-containers
 
 #Set args with blank values - these will be over-written with the CLI
 ARG ACCEPT_EULA=y
