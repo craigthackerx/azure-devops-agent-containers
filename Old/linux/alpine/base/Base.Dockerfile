@@ -82,6 +82,7 @@ RUN mkdir -p /azp && \
                 pip3 install azure-cli && \
                 pip3 install --upgrade azure-cli && \
 apk -X https://dl-cdn.alpinelinux.org/alpine/edge/main add --no-cache lttng-ust && \
+apk add libgdiplus --repository https://dl-3.alpinelinux.org/alpine/edge/testing/
 curl -L https://github.com/PowerShell/PowerShell/releases/download/v7.2.1/powershell-7.2.1-linux-alpine-x64.tar.gz -o /tmp/powershell.tar.gz && \
 mkdir -p /opt/microsoft/powershell/7 && \
 tar xzf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7 && \
@@ -90,6 +91,10 @@ ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
 
 #Prepare container for Azure DevOps script execution
 WORKDIR /azp
+COPY dotnet-install.sh /azp/dotnet-install.sh
+RUN chmod +x /azp/dotnet-install.sh && \
+    dotnet-install.sh -c Current && \
+    rm -rf /azp/dotnet-install.sh
 COPY start.sh /azp/start.sh
 CMD [ "./start.sh" ]
 
