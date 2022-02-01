@@ -39,6 +39,7 @@ RUN mkdir -p /azp && \
     krb5-libs \
     less \
     libc-dev \
+    libc6-compat \
     libffi \
     libffi-dev \
     libgcc \
@@ -83,6 +84,10 @@ RUN mkdir -p /azp && \
                 pip3 install --upgrade azure-cli && \
 apk -X https://dl-cdn.alpinelinux.org/alpine/edge/main add --no-cache lttng-ust && \
 apk add libgdiplus --repository https://dl-3.alpinelinux.org/alpine/edge/testing/
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/develop
 curl -L https://github.com/PowerShell/PowerShell/releases/download/v7.2.1/powershell-7.2.1-linux-alpine-x64.tar.gz -o /tmp/powershell.tar.gz && \
 mkdir -p /opt/microsoft/powershell/7 && \
 tar xzf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7 && \
