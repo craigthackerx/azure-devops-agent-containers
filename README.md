@@ -62,5 +62,9 @@ This repo has 2 main concepts:
   - Consider your labels, these examples use [podman](https://docs.podman.io) and use [podman-auto-update](https://docs.podman.io/en/latest/markdown/podman-auto-update.1.html) to help with CI/CD.  Similar functionality can be done with [containrrr/watchtower](https://github.com/containrrr/watchtower)
 
 
+Another note, there is a naming conveiton in this repo:
 
-The difference of the lite images and the standard is they do not have python or any packages that I have installed on them, they are essentially blank with some dependencies to run the agent package
+- Image - Standard Image with Python, PowerShell and Azure-CLI name
+- Image-Slim - Slim based image, e.g. `debian-slim` wit Python, Powershell and Azure-CLI
+- Image-Lite - Normal image without Python, Powershell or Azure-CLI
+- Image-Slim-Lite - Slim image without Pytthon, Powershell or Azure-CLI

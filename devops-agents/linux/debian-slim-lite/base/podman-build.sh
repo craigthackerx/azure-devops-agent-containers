@@ -4,10 +4,10 @@ DOCKER_REPO="docker.io"
 GITHUB_REPO="ghcr.io"
 
 USER="craigthackerx"
-IMAGE_NAME="azure-devops-agent-base-alpine"
+IMAGE_NAME="azure-devops-agent-base-debian-slim"
 TAGS="latest"
 DOCKERFILE_NAME="Base.Dockerfile"
-PYTHON3_VERSION="3.10.1"
+PYTHON3_VERSION="3.9.10"
 
 DOCKER_IMAGE="${DOCKER_REPO}/${USER}/${IMAGE_NAME}:${TAGS}"
 GITHUB_IMAGE="${GITHUB_REPO}/${USER}/${IMAGE_NAME}:${TAGS}"

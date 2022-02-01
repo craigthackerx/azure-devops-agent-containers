@@ -1,5 +1,5 @@
 #Use supplier image
-FROM alpine:latest
+FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
 
 LABEL org.opencontainers.image.source=https://github.com/craigthackerx/azure-devops-agent-containers
 
@@ -16,63 +16,25 @@ USER root
 
 #Install needed packages as well as setup python with args and pip
 RUN mkdir -p /azp && \
-    apk add --no-cache \
+    yum update -y && yum upgrade -y && yum install -y yum-utils dnf sudo && sudo yum install -y \
     bash \
-    bluez-dev \
-    bzip2 \
-    bzip2-dev \
+    bzip2-devel \
     ca-certificates \
-    coreutils \
     curl \
-    dpkg \
-    dpkg-dev \
-    expat-dev \
-    findutils \
-    g++ \
     gcc \
-    gdbm-dev \
-    gdm-dev \
     git \
     gnupg \
-    icu-libs \
+    gnupg2 \
     jq \
-    krb5-libs \
-    less \
-    libc-dev \
-    libc6-compat \
-    libffi \
-    libffi-dev \
-    libgcc \
-    libintl \
-    libnsl-dev \
-    libressl-dev \
-    libssl1.1 \
-    libstdc++ \
-    libtirpc-dev \
-    linux-headers \
+    libffi-devel \
+    libicu-devel \
     make \
-    ncurses-dev \
-    ncurses-terminfo-base \
-    nss \
-    openssl \
-    openssl-dev \
-    pax-utils \
-    readline-dev \
-    sqlite-dev \
-    sudo \
-    tar \
-    tcl-dev \
-    tk \
-    tk-dev \
-    tzdata \
+    openssl-devel \
+    sqlite-devel \
     unzip \
-    userspace-rcu \
-    util-linux-dev \
     wget \
-    xz-dev \
     zip  \
-    zlib \
-    zlib-dev && \
+    zlib-devel && \
               wget https://www.python.org/ftp/python/${PYTHON3_VERSION}/Python-${PYTHON3_VERSION}.tgz && \
               tar xzf Python-${PYTHON3_VERSION}.tgz && rm -rf tar xzf Python-${PYTHON3_VERSION}.tgz && \
               cd Python-${PYTHON3_VERSION} && ./configure --enable-optimizations --enable-loadable-sqlite-extensions && \
@@ -82,24 +44,15 @@ RUN mkdir -p /azp && \
                 pip3 install --upgrade pip && \
                 pip3 install azure-cli && \
                 pip3 install --upgrade azure-cli && \
-apk -X https://dl-cdn.alpinelinux.org/alpine/edge/main add --no-cache lttng-ust && \
-apk add libgdiplus --repository https://dl-3.alpinelinux.org/alpine/edge/testing/ && \
-curl -L https://github.com/PowerShell/PowerShell/releases/download/v7.2.1/powershell-7.2.1-linux-alpine-x64.tar.gz -o /tmp/powershell.tar.gz && \
-mkdir -p /opt/microsoft/powershell/7 && \
-tar xzf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7 && \
-chmod +x /opt/microsoft/powershell/7/pwsh && \
-ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
+curl https://packages.microsoft.com/config/rhel/7/prod.repo | sudo tee /etc/yum.repos.d/microsoft.repo && \
+yum install -y powershell
 
 #Prepare container for Azure DevOps script execution
 WORKDIR /azp
-COPY dotnet-install.sh /azp/dotnet-install.sh
-RUN chmod +x /azp/dotnet-install.sh && \
-    dotnet-install.sh -c Current && \
-    rm -rf /azp/dotnet-install.sh
-
 COPY start.sh /azp/start.sh
 CMD [ "./start.sh" ]
 
 #Install Azure Modules for Powershell - This can take a while, so setting as final step to shorten potential rebuilds
-RUN pwsh -Command Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted ; pwsh -Command Install-Module -Name Az -Force -AllowClobber -Scope AllUsers -Repository PSGallery
+RUN pwsh -Command Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted ; pwsh -Command Install-Module -Name Az -Force -AllowClobber -Scope AllUsers -Repository PSGallery && \
+    yum clean all && microdnf clean all && [ ! -d /var/cache/yum ] || rm -rf /var/cache/yum
 
