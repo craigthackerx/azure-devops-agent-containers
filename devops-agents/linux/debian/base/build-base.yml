@@ -1,6 +1,15 @@
 ---
 name: $(BuildDefinitionName)_$(SourceBranchName)_$(date:yyyyMMdd)$(rev:.r)
 
+trigger:
+  branches:
+    include:
+    - main
+    exclude:
+      - develop
+      - bug*
+      - feature*
+
 parameters:
 
   - name: CONTEXT
