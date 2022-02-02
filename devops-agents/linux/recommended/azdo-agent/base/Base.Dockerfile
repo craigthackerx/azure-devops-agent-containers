@@ -41,7 +41,7 @@ RUN mkdir -p /azp && \
               cd Python-${PYTHON3_VERSION} && ./configure --enable-optimizations --enable-loadable-sqlite-extensions && \
               make install && cd .. && rm -rf Python-${PYTHON3_VERSION} && \
               export PATH=$PATH:/usr/local/bin/python3 && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
-              python3 get-pip.py && rm -rf get-pip.py \
+              python3 get-pip.py && rm -rf get-pip.py && \
                 pip3 install virtualenv && \
                 pip3 install --upgrade pip && \
                 pip3 install azure-cli && \
