@@ -15,7 +15,7 @@ parameters:
 
   - name: CONTEXT
     displayName: "The the path to your dockerfile"
-    default: "devops-agents/linux/rhel8-slim/base"
+    default: "Old/linux/rhel8-slim/base"
     type: string
 
   - name: DOCKERFILE_NAME
