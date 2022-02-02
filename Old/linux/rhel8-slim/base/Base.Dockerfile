@@ -16,7 +16,7 @@ USER root
 
 #Install needed packages as well as setup python with args and pip
 RUN mkdir -p /azp && \
-    yum update -y && yum upgrade -y && yum install -y yum-utils dnf sudo && sudo yum install -y \
+    microdnf update -y && microdnf upgrade -y && microdnf install -y dnf sudo && microdnf install -y \
     bash \
     bzip2-devel \
     ca-certificates \
