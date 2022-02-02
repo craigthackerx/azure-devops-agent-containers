@@ -31,6 +31,7 @@ RUN mkdir -p /azp && \
     make \
     openssl-devel \
     sqlite-devel \
+    tar \
     unzip \
     wget \
     zip  \
