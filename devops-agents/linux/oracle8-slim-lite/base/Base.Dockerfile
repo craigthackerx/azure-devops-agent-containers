@@ -16,7 +16,7 @@ USER root
 
 #Install needed packages as well as setup python with args and pip
 RUN mkdir -p /azp && \
-    yum update -y && yum upgrade -y && yum install -y yum-utils dnf sudo && sudo yum install -y \
+    microdnf update -y && microdnf upgrade -y && microdnf install -y sudo && sudo microdnf install -y \
     bash \
     bzip2-devel \
     ca-certificates \
@@ -36,7 +36,7 @@ RUN mkdir -p /azp && \
     wget \
     zip  \
     zlib-devel && \
-    yum clean all && microdnf clean all && [ ! -d /var/cache/yum ] || rm -rf /var/cache/yum
+    microdnf clean all && [ ! -d /var/cache/yum ] || rm -rf /var/cache/yum
 
 
 #Prepare container for Azure DevOps script execution

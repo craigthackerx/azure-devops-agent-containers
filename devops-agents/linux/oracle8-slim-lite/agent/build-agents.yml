@@ -7,7 +7,7 @@ parameters:
 
   - name: AGENT_AMOUNT
     displayName: "The amount of agents you require"
-    default: "2"
+    default: "1"
     type: string
 
   - name: CONTEXT

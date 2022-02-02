@@ -12,7 +12,7 @@ parameters:
 
   - name: CONTEXT
     displayName: "The the path to your dockerfile"
-    default: "Old/linux/rhel8-slim-lite/agent"
+    default: "devops-agents/linux/rhel8-slim/agent"
     type: string
 
   - name: DOCKERFILE_NAME
@@ -43,7 +43,7 @@ parameters:
 
   - name: IMAGE_NAME
     displayName: "The name of the image"
-    default: "azure-devops-agent-rhel8-slim-lite-agent-"
+    default: "azure-devops-agent-rhel8-slim-agent-"
     type: string
 
   - name: TAGS
@@ -104,7 +104,7 @@ parameters:
   - name: TEMPLATE_PATH
     displayName: "The name of the variable group holding the secrets"
     type: string
-    default: "../../../../azure-pipelines/templates/linux/build-lite-agent.yml"
+    default: "../../../../azure-pipelines/templates/linux/build-agent.yml"
 
   - name: COUNT
     default: "1"

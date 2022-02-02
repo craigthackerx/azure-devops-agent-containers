@@ -26,7 +26,7 @@ RUN terraformLatestVersion=$(curl -sL https://releases.hashicorp.com/terraform/i
     wget "${packerLatestVersion}" && \
     unzip packer* && rm -rf packer*.zip && \
     mv packer /usr/local/bin && \
-    yum clean all && microdnf clean all && [ ! -d /var/cache/yum ] || rm -rf /var/cache/yum
+    microdnf clean all && [ ! -d /var/cache/yum ] || rm -rf /var/cache/yum
 
 #Make unpriviledged user
 RUN useradd -ms /bin/bash ${NORMAL_USER} && \
