@@ -12,7 +12,7 @@ parameters:
 
   - name: CONTEXT
     displayName: "The the path to your dockerfile"
-    default: "devops-agents/linux/oracle8-slim-lite/agent"
+    default: "devops-agents/linux/oracle8-slim/agent"
     type: string
 
   - name: DOCKERFILE_NAME
