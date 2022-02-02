@@ -43,7 +43,7 @@ parameters:
 
   - name: IMAGE_NAME
     displayName: "The name of the image"
-    default: "azure-devops-agent-rhel8-lite-agent-"
+    default: "azure-devops-agent-rhel8-slim-lite-agent-"
     type: string
 
   - name: TAGS
