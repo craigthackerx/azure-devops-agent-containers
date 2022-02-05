@@ -17,11 +17,15 @@ ENV AZP_POOL ${AZP_POOL}
 ENV AZP_WORK ${AZP_WORK}
 ENV NORMAL_USER ${NORMAL_USER}
 
+LABEL io.containers.autoupdate=registry
+LABEL io.containers.autoupdate.authfile="${XDG_RUNTIME_DIR}/containers/auth.json"
+
 VOLUME /var/lib/containers
 VOLUME /home/podman/.local/share/containers
 
 #Install tooling with root
-RUN terraformLatestVersion=$(curl -sL https://releases.hashicorp.com/terraform/index.json | jq -r '.versions[].builds[].url' | egrep -v 'rc|beta|alpha' | egrep 'linux.*amd64'  | tail -1) && \
+RUN mount --make-rshared / && \
+    terraformLatestVersion=$(curl -sL https://releases.hashicorp.com/terraform/index.json | jq -r '.versions[].builds[].url' | egrep -v 'rc|beta|alpha' | egrep 'linux.*amd64'  | tail -1) && \
     wget "${terraformLatestVersion}" && \
     unzip terraform* && rm -rf terraform*.zip && \
     mv terraform /usr/local/bin && \

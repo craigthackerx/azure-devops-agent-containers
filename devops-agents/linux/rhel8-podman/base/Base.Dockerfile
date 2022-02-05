@@ -7,9 +7,25 @@ LABEL org.opencontainers.image.source=https://github.com/craigthackerx/azure-dev
 ARG ACCEPT_EULA=y
 ARG PYTHON3_VERSION=3.9.10
 
+#Set args with blank values - these will be over-written with the CLI
+ARG AZP_URL=https://dev.azure.com/Example
+ARG AZP_TOKEN=ExamplePatToken
+ARG AZP_AGENT_NAME=Example
+ARG AZP_POOL=PoolName
+ARG AZP_WORK=_work
+ARG NORMAL_USER=azp
+
 #Set the environment with the CLI-passed arguements
 ENV ACCEPT_EULA ${ACCEPT_EULA}
 ENV PYTHON3_VERSION ${PYTHON3_VERSION}
+
+#Set the environment with the CLI-passed arguements
+ENV AZP_URL ${AZP_URL}
+ENV AZP_TOKEN ${AZP_TOKEN}
+ENV AZP_AGENT_NAME ${AZP_AGENT_NAME}
+ENV AZP_POOL ${AZP_POOL}
+ENV AZP_WORK ${AZP_WORK}
+ENV NORMAL_USER ${NORMAL_USER}
 
 #Declare user expectation, I am performing root actions, so use root.
 USER root
@@ -44,7 +60,7 @@ RUN mkdir -p /azp && \
                 pip3 install --upgrade pip && \
                 pip3 install azure-cli && \
                 pip3 install --upgrade azure-cli && \
-curl https://packages.microsoft.com/config/rhel/7/prod.repo | sudo tee /etc/yum.repos.d/microsoft.repo && \
+curl https://packages.microsoft.com/config/rhel/9/prod.repo | sudo tee /etc/yum.repos.d/microsoft.repo && \
 yum install -y powershell
 
 #Don't include container-selinux and remove
@@ -70,7 +86,13 @@ ADD podman-containers.conf /home/podman/.config/containers/containers.conf
 
 #chmod containers.conf and adjust storage.conf to enable Fuse storage.
 RUN chmod 644 /etc/containers/containers.conf; sed -i -e 's|^#mount_program|mount_program|g' -e '/additionalimage.*/a "/var/lib/shared",' -e 's|^mountopt[[:space:]]*=.*$|mountopt = "nodev,fsync=0"|g' /etc/containers/storage.conf
-RUN mkdir -p /var/lib/shared/overlay-images /var/lib/shared/overlay-layers /var/lib/shared/vfs-images /var/lib/shared/vfs-layers; touch /var/lib/shared/overlay-images/images.lock; touch /var/lib/shared/overlay-layers/layers.lock; touch /var/lib/shared/vfs-images/images.lock; touch /var/lib/shared/vfs-layers/layers.lock
+RUN mkdir -p /var/lib/shared/overlay-images /var/lib/shared/overlay-layers /var/lib/shared/vfs-images /var/lib/shared/vfs-layers; \
+    touch /var/lib/shared/overlay-images/images.lock; \
+    touch /var/lib/shared/overlay-layers/layers.lock; \
+    touch /var/lib/shared/vfs-images/images.lock; \
+    touch /var/lib/shared/vfs-layers/layers.lock && \
+    pip3 install podman-compose \
+    mount --make-rshared /
 
 ENV _CONTAINERS_USERNS_CONFIGURED=""
 
@@ -82,4 +104,3 @@ CMD [ "./start.sh" ]
 #Install Azure Modules for Powershell - This can take a while, so setting as final step to shorten potential rebuilds
 RUN pwsh -Command Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted ; pwsh -Command Install-Module -Name Az -Force -AllowClobber -Scope AllUsers -Repository PSGallery && \
     yum clean all && microdnf clean all && [ ! -d /var/cache/yum ] || rm -rf /var/cache/yum
-
