@@ -43,9 +43,9 @@ parameters:
     type: string
     default: ":latest"
 
-  - name: HOSTED_AGENT_IMAGE
+  - name: POOL_NAME
     displayName: "The name of the vmImage"
-    default: "ubuntu-latest"
+    default: "Project-Pool"
     type: string
 
   - name: SECRETS_VARIABLE_GROUP
@@ -80,5 +80,5 @@ jobs:
       DOCKERFILE_NAME: ${{ parameters.DOCKERFILE_NAME }}
       REGISTRY: ${{ parameters.REGISTRY }}
       PYTHON3_VERSION: ${{ parameters.PYTHON3_VERSION }}
-      IMAGE_NAME: ${{ parameters.IMAGE_NAME }}
+      POOL_NAME: ${{ parameters.POOL_NAME }}
       TAGS: ${{ parameters.TAGS }}

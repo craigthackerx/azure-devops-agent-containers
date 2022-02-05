@@ -40,9 +40,9 @@ parameters:
     default: ":latest"
     type: string
 
-  - name: HOSTED_AGENT_IMAGE
+  - name: POOL_NAME
     displayName: "The name of the vmImage"
-    default: "ubuntu-latest"
+    default: "Project-Name"
     type: string
 
   - name: SECRETS_VARIABLE_GROUP

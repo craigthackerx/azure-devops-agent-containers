@@ -22,11 +22,6 @@ parameters:
     displayName: "The name of the Dockerfile"
     default: "Base.Dockerfile"
     type: string
-    values:
-      - "Dockerfile"
-      - "Containerfile"
-      - "Base.Dockerfile"
-      - "Agent.Dockerfile"
 
   - name: PYTHON3_VERSION
     displayName: "The version of python to be installed by from get.scoop.sh"
@@ -37,12 +32,6 @@ parameters:
     displayName: "The target registry"
     default: "ghcr.io"
     type: string
-    values:
-      - "ghcr.io"
-      - "docker.io"
-      - "quay.io"
-      - "registry.redhat.com"
-      - "azurecr.io"
 
   - name: IMAGE_NAME
     displayName: "The name of the image"

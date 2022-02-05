@@ -16,7 +16,6 @@ AZP_WORK="_work"
 
 POD_NAME="azdo-agent-pod"
 
-
 START="1"
 END="3"
 
@@ -35,6 +34,8 @@ do
     --build-arg AZP_WORK="${AZP_WORK}"
 done
 
+podman pod create \
+--name "${POD_NAME}" || podman pod rm "${POD_NAME}" --force && \
 
 podman pod create \
 --name "${POD_NAME}" && \

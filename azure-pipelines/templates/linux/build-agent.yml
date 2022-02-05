@@ -27,11 +27,6 @@ parameters:
     displayName: "The name of the Dockerfile"
     default: "Dockerfile"
     type: string
-    values:
-      - "Dockerfile"
-      - "Containerfile"
-      - "Base.Dockerfile"
-      - "Agent.Dockerfile"
 
   - name: NORMAL_USER
     displayName: "The name for the container user"
@@ -64,12 +59,6 @@ parameters:
     displayName: "The target registry"
     default: "ghcr.io"
     type: string
-    values:
-      - "ghcr.io"
-      - "docker.io"
-      - "quay.io"
-      - "registry.redhat.com"
-      - "azurecr.io"
 
   - name: IMAGE_NAME
     displayName: "The name of the image"
