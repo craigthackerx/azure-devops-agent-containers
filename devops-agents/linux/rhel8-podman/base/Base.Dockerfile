@@ -91,7 +91,7 @@ RUN mkdir -p /var/lib/shared/overlay-images /var/lib/shared/overlay-layers /var/
     touch /var/lib/shared/overlay-layers/layers.lock; \
     touch /var/lib/shared/vfs-images/images.lock; \
     touch /var/lib/shared/vfs-layers/layers.lock && \
-    pip3 install podman-compose \
+    pip3 install podman-compose && \
     mount --make-rshared /
 
 ENV _CONTAINERS_USERNS_CONFIGURED=""
