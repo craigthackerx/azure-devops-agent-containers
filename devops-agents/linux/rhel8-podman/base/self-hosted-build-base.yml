@@ -80,5 +80,6 @@ jobs:
       DOCKERFILE_NAME: ${{ parameters.DOCKERFILE_NAME }}
       REGISTRY: ${{ parameters.REGISTRY }}
       PYTHON3_VERSION: ${{ parameters.PYTHON3_VERSION }}
+      IMAGE_NAME: ${{ parameters.IMAGE_NAME }}
       POOL_NAME: ${{ parameters.POOL_NAME }}
       TAGS: ${{ parameters.TAGS }}
