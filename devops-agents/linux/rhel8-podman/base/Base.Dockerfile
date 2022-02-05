@@ -60,7 +60,7 @@ RUN mkdir -p /azp && \
                 pip3 install --upgrade pip && \
                 pip3 install azure-cli && \
                 pip3 install --upgrade azure-cli && \
-curl https://packages.microsoft.com/config/rhel/9/prod.repo | sudo tee /etc/yum.repos.d/microsoft.repo && \
+curl https://packages.microsoft.com/config/rhel/8/prod.repo | sudo tee /etc/yum.repos.d/microsoft.repo && \
 yum install -y powershell
 
 #Don't include container-selinux and remove
