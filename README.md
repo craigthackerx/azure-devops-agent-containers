@@ -15,7 +15,7 @@ My containers probably don't follow best practice as I am not really employing a
 ## High-level info
 
 - CI/CD with Azure DevOps & GitHub Actions Examples :rocket:
-- Using easy, readable, script params instead of in-built Steps, Templates & Actions for easy migrations to other CI/CDs
+    - Using easy, readable, script params instead of in-built Steps, Templates & Actions for easy migrations to other CI/CDs
 - Container registry using GitHub Packages with Github Container Registry :sunglasses:
 - Example scripts in Podman, CI/CD pipelines in Podman for Linux and Docker for Windows :whale:
 - Linux Images used in the repo:
