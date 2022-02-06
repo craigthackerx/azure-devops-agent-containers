@@ -22,11 +22,6 @@ parameters:
     default: "Dockerfile"
     type: string
 
-  - name: PYTHON3_VERSION
-    displayName: "The version of python to be installed by from source"
-    default: "3.10.1"
-    type: string
-
   - name: REGISTRY
     displayName: "The target registry"
     default: "ghcr.io"
