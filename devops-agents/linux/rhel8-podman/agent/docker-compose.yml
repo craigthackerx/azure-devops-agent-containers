@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+
+  agent-1:
+    build: .
+    image: "ghcr.io/craigthackerx/azure-devops-agent-rhel8-podman-agent-1:latest"
+    container_name: "agent-1"
+    restart: unless-stopped
+    privileged: true

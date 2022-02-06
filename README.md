@@ -10,15 +10,19 @@ There are several projects which attempt to do this, but never in a way that I "
 
 The only thing to note, these containers have no "real" inherit dependencies, in theory, passing `ENV` and/or `ARG`'s into your container with the `start.sh` and `start.ps1` scripts that I have based from the Microsoft documentation is enough to get going. But I will try to document what parts are what and why - and my containers are only an example, so check out the Usage section for more info.
 
-My containers probably don't follow best practice as I am not really employing any real shell-scripts or layer optimization, but these work for me. Here is some high level.
+My containers probably don't follow best practice as I am not really employing any real shell-scripts tricks or layer optimization, but these work for me. Here is some high level.
 
 ## High-level info
 
-- CI/CD with GitHub Actions :rocket: - (Azure DevOps CI/CD coming soon) - Using easy, readable, script params instead of in-built Actions for easy migrations to other CI/CDs
+- CI/CD with Azure DevOps & GitHub Actions Examples :rocket: - Using easy, readable, script params instead of in-built Steps, Templates & Actions for easy migrations to other CI/CDs
 - Container registry using GitHub Packages with Github Container Registry :sunglasses:
 - Example scripts in Podman, CI/CD pipelines in Podman for Linux and Docker for Windows :whale:
 - Linux Images used in the repo:
-   - [RedHat 8 Universal Basic Image](https://catalog.redhat.com/software/container-stacks/detail/5ec53f50ef29fd35586d9a56)
+   - [RedHat 8 Universal Basic Image - Minimal, Standard & Init](https://catalog.redhat.com/software/container-stacks/detail/5ec53f50ef29fd35586d9a56)
+   - [Oracle Linux 8, Standard and Slim](https://hub.docker.com/_/oraclelinux?)
+   - [Ubuntu](https://hub.docker.com/_/ubuntu)
+   - [Debian, Standard and Slim](https://hub.docker.com/_/debian)
+  
  - Windows Image used in the repo:
    - [Windows Server 2022 LTSC](https://hub.docker.com/_/microsoft-windows-server/) 
 
@@ -60,11 +64,15 @@ This repo has 2 main concepts:
   - You should consider container security, for example, running the container as a non-root user and having least privileged where possible, this example uses a `NORMAL_USER` for its `CMD` context when the container starts, so this user must be made and have the `USER` directive set, as well as `PATH` updated.  Always check the upstream base image for vulnerabilities before building agents on top.
   - Users are generated using some form of random entropy with a input argument, to ensure conflict would be close to impossible - if you want to hard-code your agent name, you can do this with an `--build-arg`
   - Consider your labels, these examples use [podman](https://docs.podman.io) and use [podman-auto-update](https://docs.podman.io/en/latest/markdown/podman-auto-update.1.html) to help with CI/CD.  Similar functionality can be done with [containrrr/watchtower](https://github.com/containrrr/watchtower)
+  - Podman supports `pods` and there is a script used to help provision this: [podman-pod-build.sh](https://github.com/craigthackerx/azure-devops-agent-containers/blob/develop/devops-agents/linux/rhel8-full/full/podman-pod-build.sh).  It will build the containers as part of the base and add these to a single pod.
 
 
-Another note, there is a naming conveiton in this repo:
+Some others notes:
 
-- Image - Standard Image with Python, PowerShell and Azure-CLI name
-- Image-Slim - Slim based image, e.g. `debian-slim` wit Python, Powershell and Azure-CLI
-- Image-Lite - Normal image without Python, Powershell or Azure-CLI
-- Image-Slim-Lite - Slim image without Pytthon, Powershell or Azure-CLI
+There are more than just standard images, I do not own or give any explicit license agreements which may be contained with the software in these images, but have given images for examples and published them to allow experiments :scientist:.  The images are as follows:
+
+- Image - Standard Image with Python, PowerShell and Azure-CLI, examples in this repo: `debian`, `oracle8`, `rhel8`, `ubuntu`, `winseverltsc2022`
+- Image-Slim - Slim based image, e.g. with Python, Powershell and Azure-CLI, examples in this repo: `debian-slim`, `oracle8-slim`, `rhel8-slim`
+- Image-Lite - Normal images without Python, Powershell or Azure-CLI, examples in this repo: `debian-lite`, `oracle8-lite`, `rhel8-lite`, `ubuntu-lite`, `winseverltsc2022-lite`
+- Image-Slim-Lite - Slim image without Python, Powershell or Azure-CLI, examples in this repo: `debian-slim-lite`, `oracle8-slim-lite`, `rhel8-slim-lite`
+- Image-full - A full, monolithic image which is not part of the base/agent build type, where all resources are built into a single image, as well as having the ability to build Linux containers using podman when executed as root in [privileged mode](https://www.redhat.com/sysadmin/privileged-flag-container-engines) . Examples in this repo: `rhel8-full`.  It is not generally recommended to run this as your standard Agent, but only for specific jobs.  This image containers Python, DotNet, Go and Java in this repo to get across the point is supposed to be used for monolithic deployments and bypasses the general idea of purpose built containers

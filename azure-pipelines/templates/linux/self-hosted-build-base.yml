@@ -18,15 +18,10 @@ parameters:
     default: "Dockerfile"
     type: string
 
-  - name: NORMAL_USER
-    displayName: "The name for the container user"
-    default: "ContainerAdministrator"
-    type: string
-
   - name: PYTHON3_VERSION
-    displayName: "The version of python to be installed by get.scoop.sh"
+    displayName: "The version of python to be installed by from source"
     type: string
-    default: "@latest"
+    default: "3.10.1"
 
   - name: REGISTRY
     displayName: "The target registry"
@@ -42,17 +37,16 @@ parameters:
     type: string
     default: ":latest"
 
-  - name: HOSTED_AGENT_IMAGE
+  - name: POOL_NAME
     displayName: "The name of the vmImage for Azure Hosted Pools"
-    default: "windows-2022"
     type: string
+    default: "ubuntu-latest"
 
 ################## DO NOT EDIT ANYTHING PAST HERE UNLESS YOU KNOW WHAT YOU ARE DOING ##################
 
 jobs:
   - job: build_container
-    pool:
-      vmImage: ${{ parameters.HOSTED_AGENT_IMAGE }}
+    pool: ${{ parameters.POOL_NAME }}
     workspace:
       clean: all
     displayName: Build Image - ${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}
@@ -62,20 +56,19 @@ jobs:
 
       - checkout: self
 
-      - powershell: |
+      - bash: |
           
-          docker login -u ${{ parameters.USERNAME }} -p ${{ parameters.PASSWORD }} ${{ parameters.REGISTRY }} ; `
+          podman login -u ${{ parameters.USERNAME }} -p ${{ parameters.PASSWORD }} ${{ parameters.REGISTRY }} && \
 
-          docker build `
-          --file=${{ parameters.DOCKERFILE_NAME }} `
-          --tag=${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }} `
-          --build-arg ACCEPT_EULA=y `
-          --build-arg NORMAL_USER=${{ parameters.NORMAL_USER }} `
-          --build-arg PYTHON3_VERSION=${{ parameters.PYTHON3_VERSION }} `
-          . ; `
+          podman build \
+          --file="${{ parameters.DOCKERFILE_NAME }}" \
+          --tag="${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}" \
+          --build-arg ACCEPT_EULA="y" \
+          --build-arg PYTHON3_VERSION="${{ parameters.PYTHON3_VERSION }}" \
+          --squash && \
 
-          docker push "${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}" ; `
+          podman push "${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${{ parameters.TAGS }}" && \
 
-          docker logout ${{ parameters.REGISTRY }}
-        displayName: Run Docker Login, Build, Push and Logout
+          podman logout ${{ parameters.REGISTRY }}
+        displayName: Run Podman Login, Build, Push and Logout
         workingDirectory: ${{ parameters.CONTEXT }}

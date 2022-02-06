@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+
+  full-image:
+    image: "ghcr.io/craigthackerx/azure-devops-agent-rhel8-full-1:latest"
+    container_name: "agent-1"
+    restart: unless-stopped
+    labels:
+      - "io.containers.autoupdate=registry"
+      - "io.containers.autoupdate.authfile=/run/containers/0/auth.json"
+    privileged: true
+    environment:
+      - AZP_URL=${AZP_URL}
+      - AZP_TOKEN=${AZP_TOKEN}
+      - AZP_POOL=${AZP_POOL}
+      - AZP_WORK=${AZP_WORK}

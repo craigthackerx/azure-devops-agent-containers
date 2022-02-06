@@ -15,24 +15,13 @@ parameters:
 
   - name: DOCKERFILE_NAME
     displayName: "The name of the Dockerfile"
-    default: "Dockerfile"
+    default: "Base.Dockerfile"
     type: string
-    values:
-      - "Dockerfile"
-      - "Containerfile"
-      - "Base.Dockerfile"
-      - "Agent.Dockerfile"
 
   - name: REGISTRY
     displayName: "The target registry"
     default: "ghcr.io"
     type: string
-    values:
-      - "ghcr.io"
-      - "docker.io"
-      - "quay.io"
-      - "registry.redhat.com"
-      - "azurecr.io"
 
   - name: IMAGE_NAME
     displayName: "The name of the image"

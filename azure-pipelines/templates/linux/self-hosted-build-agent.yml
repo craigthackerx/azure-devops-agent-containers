@@ -7,8 +7,8 @@ parameters:
     type: string
 
   - name: COUNT
-    displayName: "The amount that the count should start at"
     default: "1"
+    displayName: "The amount that the count should start at"
     type: string
 
   - name: USERNAME
@@ -30,7 +30,7 @@ parameters:
 
   - name: NORMAL_USER
     displayName: "The name for the container user"
-    default: "ContainerAdministrator"
+    default: $(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)
     type: string
 
   - name: AZP_URL
@@ -43,7 +43,7 @@ parameters:
 
   - name: AZP_AGENT_NAME
     displayName: "The name for your agent"
-    default: $(Get-Random)
+    default: $(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)
     type: string
 
   - name: AZP_POOL
@@ -66,20 +66,19 @@ parameters:
 
   - name: TAGS
     displayName: "The tag of the image"
+    type: string
     default: ":latest"
-    type: string
 
-  - name: HOSTED_AGENT_IMAGE
+  - name: POOL__NAME
     displayName: "The name of the vmImage for Azure Hosted Pools"
-    default: "windows-2022"
     type: string
+    default: "ubuntu-latest"
 
 ################## DO NOT EDIT ANYTHING PAST HERE UNLESS YOU KNOW WHAT YOU ARE DOING ##################
 
 jobs:
   - job: build_container
-    pool:
-      vmImage: ${{ parameters.HOSTED_AGENT_IMAGE }}
+    pool: ${{ parameters.POOL_NAME }}
     workspace:
       clean: all
     displayName: Build Image - ${{ parameters.IMAGE_NAME }}${{ parameters.COUNT }}-${{ parameters.AGENT_AMOUNT }}${{ parameters.TAGS }}
@@ -89,28 +88,27 @@ jobs:
 
       - checkout: self
 
-      - powershell: |
+      - bash: |
           
-          docker login -u ${{ parameters.USERNAME }} -p ${{ parameters.PASSWORD }} ${{ parameters.REGISTRY }} ; `
-
-          foreach ($INDEX in ${{ parameters.COUNT }}..${{ parameters.AGENT_AMOUNT }}) {
+          podman login -u ${{ parameters.USERNAME }} -p ${{ parameters.PASSWORD }} ${{ parameters.REGISTRY }} && \
           
-            docker build `
-            --file=${{ parameters.DOCKERFILE_NAME }} `
-            --tag="${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}$($INDEX)${{ parameters.TAGS }}" `
-            --build-arg ACCEPT_EULA=y `
-            --build-arg NORMAL_USER=${{ parameters.NORMAL_USER }} `
-            --build-arg AZP_URL=${{ parameters.AZP_URL }} `
-            --build-arg AZP_TOKEN=${{ parameters.AZP_TOKEN }} `
-            --build-arg AZP_AGENT_NAME=${{ parameters.AZP_AGENT_NAME }} `
-            --build-arg AZP_POOL=${{ parameters.AZP_POOL }} `
-            --build-arg AZP_WORK=${{ parameters.AZP_WORK }} `
-            . ; `
-  
-            docker push "${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}$($INDEX)${{ parameters.TAGS }}"
+          for INDEX in $(seq ${{ parameters.COUNT }} ${{ parameters.AGENT_AMOUNT}})
+          do
           
-          }
+          podman build \
+          --file="${{ parameters.DOCKERFILE_NAME }}" \
+          --tag="${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${INDEX}${{ parameters.TAGS }}" \
+          --build-arg NORMAL_USER="${{ parameters.NORMAL_USER }}"  \
+          --build-arg ACCEPT_EULA="y" \
+          --build-arg AZP_URL="${{ parameters.AZP_URL }}" \
+          --build-arg AZP_TOKEN="${{ parameters.AZP_TOKEN }}" \
+          --build-arg AZP_AGENT_NAME="${{ parameters.AZP_AGENT_NAME }}" \
+          --build-arg AZP_POOL="${{ parameters.AZP_POOL }}" \
+          --build-arg AZP_WORK="${{ parameters.AZP_WORK}}"
+          podman push "${{ parameters.REGISTRY }}/${{ parameters.USERNAME }}/${{ parameters.IMAGE_NAME }}${INDEX}${{ parameters.TAGS }}"
           
-          docker logout ${{ parameters.REGISTRY }}
-        displayName: Run Docker Login, Build x${{ parameters.AGENT_AMOUNT }}, Push x${{ parameters.AGENT_AMOUNT }} and Logout
+          done
+          
+          podman logout ${{ parameters.REGISTRY }}
+        displayName: Run Podman Login, Build x${{ parameters.AGENT_AMOUNT }}, Push x${{ parameters.AGENT_AMOUNT }} and Logout
         workingDirectory: ${{ parameters.CONTEXT }}

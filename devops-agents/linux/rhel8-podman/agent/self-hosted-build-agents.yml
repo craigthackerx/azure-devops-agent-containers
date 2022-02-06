@@ -12,7 +12,7 @@ parameters:
 
   - name: CONTEXT
     displayName: "The the path to your dockerfile"
-    default: "devops-agents/windows/server/agent"
+    default: "devops-agents/linux/rhel8-podman/agent"
     type: string
 
   - name: DOCKERFILE_NAME
@@ -21,8 +21,8 @@ parameters:
     type: string
 
   - name: NORMAL_USER
-    displayName: "The name for the container user, for Windows, can only be ContainerAdministrator or ContainerUser"
-    default: "ContainerAdministrator"
+    displayName: "The name for the container user"
+    default: $(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)
     type: string
 
   - name: REGISTRY
@@ -32,7 +32,7 @@ parameters:
 
   - name: IMAGE_NAME
     displayName: "The name of the image"
-    default: "azure-devops-agent-winseverltsc2022-agent-"
+    default: "azure-devops-agent-rhel8-podman-agent-"
     type: string
 
   - name: TAGS
@@ -40,9 +40,9 @@ parameters:
     default: ":latest"
     type: string
 
-  - name: HOSTED_AGENT_IMAGE
+  - name: POOL_NAME
     displayName: "The name of the vmImage"
-    default: "windows-2022"
+    default: "Project-Name"
     type: string
 
   - name: SECRETS_VARIABLE_GROUP
@@ -62,7 +62,7 @@ parameters:
 
   - name: AZP_SECRETS_VARIABLE_GROUP
     displayName: "The name of the variable group holding the secrets"
-    default: "WINDOWS_AZURE_DEVOPS_SECRETS"
+    default: "LINUX_AZURE_DEVOPS_SECRETS"
     type: string
 
   - name: AZP_URL
@@ -77,7 +77,7 @@ parameters:
 
   - name: AZP_AGENT_NAME
     displayName: "The name for your agent, auto-generated"
-    default: $(Get-Random)
+    default: $(head /dev/urandom | tr -dc A-Za-z0-9 | head -c10)
     type: string
 
   - name: AZP_POOL
@@ -93,7 +93,7 @@ parameters:
   - name: TEMPLATE_PATH
     displayName: "The name of the variable group holding the secrets"
     type: string
-    default: "../../../../azure-pipelines/templates/windows/build-agent.yml"
+    default: "../../../../azure-pipelines/templates/linux/self-hosted-build-agent.yml"
 
   - name: COUNT
     default: "1"
@@ -101,8 +101,8 @@ parameters:
     type: string
 
 variables:
-  - group: "DOCKER_SECRETS"
-  - group: "WINDOWS_AZURE_DEVOPS_SECRETS"
+  - group: ${{ parameters.SECRETS_VARIABLE_GROUP }}
+  - group: ${{ parameters.AZP_SECRETS_VARIABLE_GROUP }}
 
 jobs:
   - template: ${{ parameters.TEMPLATE_PATH }}
@@ -110,6 +110,7 @@ jobs:
       AGENT_AMOUNT: ${{ parameters.AGENT_AMOUNT }}
       USERNAME: ${{ parameters.USERNAME }}
       PASSWORD: ${{ parameters.PASSWORD }}
+      NORMAL_USER: ${{ parameters.NORMAL_USER }}
       CONTEXT: ${{ parameters.CONTEXT }}
       DOCKERFILE_NAME: ${{ parameters.DOCKERFILE_NAME }}
       REGISTRY: ${{ parameters.REGISTRY }}
