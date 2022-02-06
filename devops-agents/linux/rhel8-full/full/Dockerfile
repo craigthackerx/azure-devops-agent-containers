@@ -15,6 +15,7 @@ ENV PYTHON3_VERSION ${PYTHON3_VERSION}
 ENV DOTNET_VERSION ${DOTNET_VERSION}
 ENV GO_VERSION ${GO_VERSION}
 ENV JAVA_VERSION ${JAVA_VERSION}
+
 #Set args with blank values - these will be over-written with the CLI
 ARG AZP_URL=https://dev.azure.com/Example
 ARG AZP_TOKEN=ExamplePatToken
@@ -98,7 +99,10 @@ RUN curl https://packages.microsoft.com/config/rhel/8/prod.repo | sudo tee /etc/
 yum install -y powershell
 
 RUN curl -s "https://get.sdkman.io" | bash && \
-    source "$HOME/.sdkman/bin/sdkman-init.sh"
+    source "$HOME/.sdkman/bin/sdkman-init.sh" && \
+    nvmLatest=$(curl --silent "https://api.github.com/repos/nvm-sh/nvm/releases/latest" | jq -r .tag_name) && \
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/${nvmLatest}/install.sh | bash && \
+    nvm install --lts
 
 #Don't include container-selinux and remove
 #directories used by yum that are just taking
@@ -165,6 +169,8 @@ RUN pip3 install --user \
     pipenv \
     terraform-compliance \
     virtualenv && \
-echo 'alias powershell="pwsh"' >> /home/${NORMAL_USER}/.bashrc
+        echo 'alias powershell="pwsh"' >> /home/${NORMAL_USER}/.bashrc && \
+        echo 'alias powershell="pwsh"' >> /root/.bashrc
+
 
 WORKDIR /azp

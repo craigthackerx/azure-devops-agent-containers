@@ -24,7 +24,7 @@ if [ "$(command -v jq)" ] && [ "$(command -v curl)" ] && [ "$(command -v sed)" ]
 
 fi
 
-azdoLatestAgentVersion="$(curl --silent "https://api.github.com/repos/${USER}/${REPO}/releases/latest" | jq -r .tag_name)" && \
+azdoLatestAgentVersion="$(curl --silent "https://api.github.com/repos/${USER}/${REPO}/releases/latest" | jq -r .tag_name | sed 's/v//')" && \
 
 strippedTagAzDoAgentVersion="$(echo "${azdoLatestAgentVersion}" | sed 's/v//')" && \
 
