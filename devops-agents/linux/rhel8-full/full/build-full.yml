@@ -11,6 +11,10 @@ trigger:
       - feature*
 
 parameters:
+  - name: AGENT_AMOUNT
+    displayName: "The amount of agents you require"
+    default: "1"
+    type: string
 
   - name: CONTEXT
     displayName: "The the path to your dockerfile"
@@ -29,7 +33,7 @@ parameters:
 
   - name: IMAGE_NAME
     displayName: "The name of the image"
-    default: "azure-devops-agent-rhel8-full"
+    default: "azure-devops-agent-rhel8-full-"
     type: string
 
   - name: TAGS
@@ -124,6 +128,7 @@ variables:
 jobs:
   - template: ${{ parameters.TEMPLATE_PATH }}
     parameters:
+      AGENT_AMOUNT: ${{ parameters.AGENT_AMOUNT }}
       USERNAME: ${{ parameters.USERNAME }}
       PASSWORD: ${{ parameters.PASSWORD }}
       CONTEXT: ${{ parameters.CONTEXT }}
