@@ -152,6 +152,8 @@ RUN echo -en "\n" | /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com
     source "$HOME/.sdkman/bin/sdkman-init.sh" && \
     az config set extension.use_dynamic_install=yes_without_prompt
 
+USER root
+
 ENV GOPATH=/usr/local/go/dev
 
 #Set User Path with expected paths for new packages
