@@ -71,7 +71,7 @@ RUN mkdir -p /azp && \
                 pip3 install --upgrade azure-cli && \
                 pip3 install ansible terraform-compliance pywinrm && \
                 mkdir -p /home/linuxbrew && \
-                chown -R ${NORMAL_USER}:${NORMAL_USER} /home/linuxbrew
+                chown -R ${NORMAL_USER}:${NORMAL_USER} /home/linuxbrew && \
                 az config set extension.use_dynamic_install=yes_without_prompt
 
 RUN terraformLatestVersion=$(curl -sL https://releases.hashicorp.com/terraform/index.json | jq -r '.versions[].builds[].url' | egrep -v 'rc|beta|alpha' | egrep 'linux.*amd64'  | tail -1) && \
