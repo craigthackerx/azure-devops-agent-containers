@@ -89,11 +89,11 @@ parameters:
   - name: AZP_URL
     displayName: "The URL of your Azure DevOps instance, e.g. https://dev.azure.com/example, you should use a secret variable"
     type: string
-    default: $(AZP_URL)
+    default: https://dev.azure.com
 
   - name: AZP_TOKEN
     displayName: "The PAT token for your Agent to access Azure DevOps, you should use a secret variable"
-    default: $(AZP_TOKEN)
+    default: Exampletoken
     type: string
 
   - name: AZP_AGENT_NAME
@@ -103,7 +103,7 @@ parameters:
 
   - name: AZP_POOL
     displayName: "The pool for your agent to join, you should use a secret variable"
-    default: $(AZP_POOL)
+    default: examplepool
     type: string
 
   - name: AZP_WORK
