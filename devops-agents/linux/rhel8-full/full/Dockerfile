@@ -102,6 +102,7 @@ RUN curl -s "https://get.sdkman.io" | bash && \
     source "$HOME/.sdkman/bin/sdkman-init.sh" && \
     nvmLatest=$(curl --silent "https://api.github.com/repos/nvm-sh/nvm/releases/latest" | jq -r .tag_name) && \
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/${nvmLatest}/install.sh | bash && \
+    source /root/.bashrc && \
     nvm install --lts
 
 #Don't include container-selinux and remove
