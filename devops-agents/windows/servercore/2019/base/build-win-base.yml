@@ -38,7 +38,7 @@ parameters:
 
   - name: IMAGE_NAME
     displayName: "The name of the image"
-    default: "azure-devops-agent-base-winseverltsc2019"
+    default: "azure-devops-agent-base-winsevercoreltsc2019"
     type: string
 
   - name: TAGS
