@@ -44,6 +44,7 @@ parameters:
 
   - name: HOSTED_AGENT_IMAGE
     displayName: "The name of the vmImage for Azure Hosted Pools"
+    default: "windows-2022"
     type: string
 
 ################## DO NOT EDIT ANYTHING PAST HERE UNLESS YOU KNOW WHAT YOU ARE DOING ##################

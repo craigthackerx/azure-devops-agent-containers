@@ -126,6 +126,7 @@ jobs:
       REGISTRY: ${{ parameters.REGISTRY }}
       IMAGE_NAME: ${{ parameters.IMAGE_NAME }}
       TAGS: ${{ parameters.TAGS }}
+      HOSTED_AGENT_IMAGE: ${{ parameters.HOSTED_AGENT_IMAGE }}
       AZP_URL: ${{ parameters.AZP_URL }}
       AZP_TOKEN: ${{ parameters.AZP_TOKEN }}
       AZP_POOL: ${{ parameters.AZP_POOL }}
