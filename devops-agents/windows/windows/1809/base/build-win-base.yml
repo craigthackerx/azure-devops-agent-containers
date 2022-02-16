@@ -7,7 +7,7 @@ parameters:
 
   - name: CONTEXT
     displayName: "The the path to your dockerfile"
-    default: "devops-agents/windows/windows/2019/base"
+    default: "devops-agents/windows/windows/1809/base"
     type: string
 
   - name: DOCKERFILE_NAME
