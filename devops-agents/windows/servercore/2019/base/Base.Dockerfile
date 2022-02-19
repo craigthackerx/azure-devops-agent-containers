@@ -2,7 +2,9 @@ FROM mcr.microsoft.com/windows/servercore:ltsc2019
 
 # escape = `
 
-LABEL org.opencontainers.image.source https://github.com/craigthackerx/azure-devops-agent-containers
+LABEL org.opencontainers.image.source=https://github.com/craigthackerx/azure-devops-agent-containers
+
+COPY tls-fix.ps1 /tls-fix.ps1
 
 ARG NORMAL_USER=ContainerAdministrator
 ARG PYTHON3_VERSION=@latest
@@ -14,6 +16,8 @@ ENV ACCEPT_EULA ${ACCEPT_EULA}
 
 #Use Powershell instead of CMD
 SHELL ["powershell", "-Command"]
+
+RUN tls-fix.ps1 ; Remove-Item -Force tls-fix.ps1
 
 #Set Unrestricted Policy & Install chocolatey
 RUN Set-ExecutionPolicy Unrestricted ;  \
