@@ -12,7 +12,7 @@ parameters:
 
   - name: CONTEXT
     displayName: "The the path to your dockerfile"
-    default: "devops-agents/windows/server/agent"
+    default: "devops-agents/windows/servercore/agent"
     type: string
 
   - name: DOCKERFILE_NAME
