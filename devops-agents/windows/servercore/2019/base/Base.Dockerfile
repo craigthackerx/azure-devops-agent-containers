@@ -24,7 +24,8 @@ RUN Set-ExecutionPolicy Unrestricted ;  \
     Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) ; \
     Set-ExecutionPolicy Bypass -Scope Process -Force; iwr -useb get.scoop.sh | iex ; \
     choco install -y \
-    powershell-core ; \
+    powershell-core  \
+    azure-cli ; \
     scoop install \
     7zip \
     git ; \
@@ -34,17 +35,17 @@ RUN Set-ExecutionPolicy Unrestricted ;  \
     dark \
     lessmsi \
     jq \
-    python${PYTHON3_VERSION} \
     sed \
     which \
-    zip ; \
-    python -m pip install --upgrade pip ; \
-    pip3 install azure-cli
+    zip
 
-ENV PATH "C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Users\ContainerAdministrator\AppData\Local\Microsoft\WindowsApps;;C:\ProgramData\chocolatey\bin;C:\Users"\\${NORMAL_USER}"\scoop\shims;C:\Program Files\PowerShell\7;C:\Users"\\${NORMAL_USER}"\scoop\apps\python\current\Scripts\;"
+ENV PATH "C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Users\ContainerAdministrator\AppData\Local\Microsoft\WindowsApps;C:\Python;C:\Python\Scripts;C:\ProgramData\chocolatey\bin;C:\Users"\\${NORMAL_USER}"\scoop\shims;C:\Program Files\PowerShell\7"
 
 #Use Powershell Core instead of 5
 SHELL ["pwsh", "-Command"]
+
+RUN choco install -y \
+    python --params "/InstallDir:C:\Python"
 
 RUN mkdir C:/azp
 WORKDIR C:/azp
