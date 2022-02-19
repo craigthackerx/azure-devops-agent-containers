@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/windows/server:ltsc2022-amd64
+FROM mcr.microsoft.com/windows/servercore:ltsc2022-amd64
 
 # e
 # escape = `
