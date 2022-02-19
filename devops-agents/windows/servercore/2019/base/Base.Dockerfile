@@ -45,7 +45,9 @@ ENV PATH "C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\Sys
 SHELL ["pwsh", "-Command"]
 
 RUN choco install -y \
-    python3 --params "/InstallDir:C:\Python"
+    python3 --params "/InstallDir:C:\Python" ; \
+    pip3 install wheel \
+    azure-cli
 
 RUN mkdir C:/azp
 WORKDIR C:/azp

@@ -24,7 +24,8 @@ RUN Set-ExecutionPolicy Unrestricted ;  \
     Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) ; \
     Set-ExecutionPolicy Bypass -Scope Process -Force; iwr -useb get.scoop.sh | iex ; \
     choco install -y \
-    powershell-core ; \
+    powershell-core  \
+    azure-cli ; \
     scoop install \
     7zip \
     git ; \
