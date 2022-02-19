@@ -24,8 +24,7 @@ RUN Set-ExecutionPolicy Unrestricted ;  \
     Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) ; \
     Set-ExecutionPolicy Bypass -Scope Process -Force; iwr -useb get.scoop.sh | iex ; \
     choco install -y \
-    powershell-core  \
-    azure-cli ; \
+    powershell-core ; \
     scoop install \
     7zip \
     git ; \
@@ -45,7 +44,9 @@ ENV PATH "C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\Sys
 SHELL ["pwsh", "-Command"]
 
 RUN choco install -y \
-    python3 --params "/InstallDir:C:\Python"
+    python3 --params "/InstallDir:C:\Python" ; \
+    pip3 install wheel \
+    azure-cli
 
 RUN mkdir C:/azp
 WORKDIR C:/azp
