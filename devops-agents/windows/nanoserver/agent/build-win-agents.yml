@@ -43,7 +43,7 @@ parameters:
 
   - name: IMAGE_NAME
     displayName: "The name of the image"
-    default: "azure-devops-agent-winseverltsc2022-agent-"
+    default: "azure-devops-agent-winnanoserverltsc2022-agent-"
     type: string
 
   - name: TAGS

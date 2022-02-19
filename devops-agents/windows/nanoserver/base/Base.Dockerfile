@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/windows/server:ltsc2022-amd64
+FROM docker pull mcr.microsoft.com/windows/nanoserver:ltsc2022
 
 # escape = `
 
