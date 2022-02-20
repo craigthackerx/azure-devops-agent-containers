@@ -1,5 +1,5 @@
 #Use base image
-FROM ghcr.io/craigthackerx/azure-devops-agent-base-winnanoseverltsc2022:latest
+FROM ghcr.io/craigthackerx/azure-devops-agent-base-win1809:latest
 
 # escape = `
 

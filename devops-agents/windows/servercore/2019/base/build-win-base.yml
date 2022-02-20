@@ -7,7 +7,7 @@ parameters:
 
   - name: CONTEXT
     displayName: "The the path to your dockerfile"
-    default: "devops-agents/windows/nanoserver/base"
+    default: "devops-agents/windows/servercore/2019/base"
     type: string
 
   - name: DOCKERFILE_NAME
@@ -38,7 +38,7 @@ parameters:
 
   - name: IMAGE_NAME
     displayName: "The name of the image"
-    default: "azure-devops-agent-base-winnanoserverltsc2022"
+    default: "azure-devops-agent-base-winsevercoreltsc2019"
     type: string
 
   - name: TAGS
@@ -48,7 +48,7 @@ parameters:
 
   - name: HOSTED_AGENT_IMAGE
     displayName: "The name of the vmImage"
-    default: "windows-2022"
+    default: "windows-2019"
     type: string
 
   - name: SECRETS_VARIABLE_GROUP
@@ -68,7 +68,7 @@ parameters:
 
   - name: TEMPLATE_PATH
     displayName: "The name of the variable group holding the secrets"
-    default: "../../../../azure-pipelines/templates/windows/build-base.yml"
+    default: "../../../../../azure-pipelines/templates/windows/build-base.yml"
     type: string
 
 variables:
@@ -80,6 +80,7 @@ jobs:
       USERNAME: ${{ parameters.USERNAME }}
       PASSWORD: ${{ parameters.PASSWORD }}
       CONTEXT: ${{ parameters.CONTEXT }}
+      HOSTED_AGENT_IMAGE: ${{ parameters.HOSTED_AGENT_IMAGE }}
       DOCKERFILE_NAME: ${{ parameters.DOCKERFILE_NAME }}
       REGISTRY: ${{ parameters.REGISTRY  }}
       PYTHON3_VERSION: ${{ parameters.PYTHON3_VERSION }}

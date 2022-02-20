@@ -7,7 +7,7 @@ parameters:
 
   - name: CONTEXT
     displayName: "The the path to your dockerfile"
-    default: "devops-agents/windows/server/base"
+    default: "devops-agents/windows/windows/base"
     type: string
 
   - name: DOCKERFILE_NAME
@@ -38,7 +38,7 @@ parameters:
 
   - name: IMAGE_NAME
     displayName: "The name of the image"
-    default: "azure-devops-agent-base-winseverltsc2022"
+    default: "azure-devops-agent-base-win20h2"
     type: string
 
   - name: TAGS

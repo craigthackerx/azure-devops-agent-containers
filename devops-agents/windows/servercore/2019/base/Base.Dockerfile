@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/windows:20H2
+FROM mcr.microsoft.com/windows/servercore:ltsc2019
 
 # escape = `
 
@@ -17,7 +17,7 @@ ENV ACCEPT_EULA ${ACCEPT_EULA}
 #Use Powershell instead of CMD
 SHELL ["powershell", "-Command"]
 
-RUN Set-ExecutionPolicy Unrestricted ; powershell /tls-fix.ps1 ; Remove-Item -Force /tls-fix.ps1
+RUN powershell /tls-fix.ps1 ; Remove-Item -Force /tls-fix.ps1
 
 #Set Unrestricted Policy & Install chocolatey
 RUN Set-ExecutionPolicy Unrestricted ;  \
@@ -44,8 +44,7 @@ ENV PATH "C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\Sys
 #Use Powershell Core instead of 5
 SHELL ["pwsh", "-Command"]
 
-RUN Set-ExecutionPolicy Unrestricted ; \
-    choco install -y \
+RUN choco install -y \
     python3 --params "/InstallDir:C:\Python" ; \
     pip3 install wheel \
     azure-cli
@@ -55,6 +54,6 @@ WORKDIR C:/azp
 COPY start.ps1 /azp/start.ps1
 
 #This can take a while, which is why its a seperate step
-RUN Set-ExecutionPolicy Unrestricted ; pwsh -Command Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted ; pwsh -Command Install-Module -Name Az -Force -AllowClobber -Scope AllUsers -Repository PSGallery
+RUN pwsh -Command Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted ; pwsh -Command Install-Module -Name Az -Force -AllowClobber -Scope AllUsers -Repository PSGallery
 
 CMD C:/azp/start.ps1

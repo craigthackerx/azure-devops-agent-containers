@@ -1,5 +1,5 @@
 #Use base image
-FROM ghcr.io/craigthackerx/azure-devops-agent-base-winseverltsc2022:latest
+FROM ghcr.io/craigthackerx/azure-devops-agent-base-winsevercoreltsc2022:latest
 
 # escape = `
 
@@ -20,6 +20,7 @@ ENV AZP_WORK ${AZP_WORK}
 ENV NORMAL_USER ${NORMAL_USER}
 
 RUN scoop install terraform packer ; \
+    choco install -y tfsec ; \
     pip3 install \
     terraform-compliance \
     checkov \

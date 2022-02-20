@@ -14,7 +14,8 @@ My containers probably don't follow best practice as I am not really employing a
 
 ## High-level info
 
-- CI/CD with Azure DevOps & GitHub Actions Examples :rocket: - Using easy, readable, script params instead of in-built Steps, Templates & Actions for easy migrations to other CI/CDs
+- CI/CD with Azure DevOps & GitHub Actions Examples :rocket:
+    - Using easy, readable, script params instead of in-built Steps, Templates & Actions for easy migrations to other CI/CDs
 - Container registry using GitHub Packages with Github Container Registry :sunglasses:
 - Example scripts in Podman, CI/CD pipelines in Podman for Linux and Docker for Windows :whale:
 - Linux Images used in the repo:
@@ -76,3 +77,5 @@ There are more than just standard images, I do not own or give any explicit lice
 - Image-Lite - Normal images without Python, Powershell or Azure-CLI, examples in this repo: `debian-lite`, `oracle8-lite`, `rhel8-lite`, `ubuntu-lite`, `winseverltsc2022-lite`
 - Image-Slim-Lite - Slim image without Python, Powershell or Azure-CLI, examples in this repo: `debian-slim-lite`, `oracle8-slim-lite`, `rhel8-slim-lite`
 - Image-full - A full, monolithic image which is not part of the base/agent build type, where all resources are built into a single image, as well as having the ability to build Linux containers using podman when executed as root in [privileged mode](https://www.redhat.com/sysadmin/privileged-flag-container-engines) . Examples in this repo: `rhel8-full`.  It is not generally recommended to run this as your standard Agent, but only for specific jobs.  This image containers Python, DotNet, Go and Java in this repo to get across the point is supposed to be used for monolithic deployments and bypasses the general idea of purpose built containers
+
+- All images are tagged as latest and available in `ghcr.io/craigthackerx`
